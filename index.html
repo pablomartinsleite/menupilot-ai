@@ -1,0 +1,2023 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <title>Dashboard Comercial | Confecção de Moda Íntima</title>
+  <style>
+    /* ==========================================================================
+       CSS 100% EMBUTIDO (ZERO DEPENDÊNCIA DE INTERNET / CDN EXTERNO)
+       Funciona perfeitamente no Visualizador de HTML do WhatsApp (Android/iOS)
+       ========================================================================== */
+    :root {
+      --wine-950: #4c0519;
+      --wine-900: #881337;
+      --wine-800: #9f1239;
+      --wine-700: #be123c;
+      --wine-100: #ffe4e6;
+      --wine-50: #fff1f2;
+      --slate-900: #0f172a;
+      --slate-800: #1e293b;
+      --slate-700: #334155;
+      --slate-600: #475569;
+      --slate-500: #64748b;
+      --slate-400: #94a3b8;
+      --slate-200: #e2e8f0;
+      --slate-100: #f1f5f9;
+      --slate-50: #f8fafc;
+      --emerald-700: #047857;
+      --emerald-600: #059669;
+      --emerald-100: #d1fae5;
+      --emerald-50: #ecfdf5;
+      --amber-600: #d97706;
+      --amber-500: #f59e0b;
+      --amber-100: #fef3c7;
+      --amber-50: #fffbeb;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: #f1f5f9;
+      color: var(--slate-900);
+      line-height: 1.4;
+      font-size: 14px;
+      padding-bottom: 32px;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 12px;
+    }
+
+    /* TOP HEADER */
+    .top-header {
+      background: linear-gradient(135deg, #4c0519 0%, #881337 55%, #9f1239 100%);
+      color: #ffffff;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.18);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 12px 0;
+    }
+
+    .brand-box {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .brand-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.16);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 18px;
+    }
+
+    .brand-title-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .brand-title {
+      font-size: 17px;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-badge {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.2);
+      color: #ffe4e6;
+      text-transform: uppercase;
+    }
+
+    .brand-subtitle {
+      font-size: 11px;
+      color: rgba(255, 228, 230, 0.88);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .updated-info {
+      text-align: right;
+      margin-right: 6px;
+      display: none;
+    }
+
+    .updated-label {
+      display: block;
+      font-size: 10px;
+      text-transform: uppercase;
+      color: #fecdd3;
+    }
+
+    .updated-val {
+      font-size: 12px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .btn-header {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      transition: 0.15s;
+    }
+
+    .btn-upload {
+      background: #ffffff;
+      color: var(--wine-900);
+    }
+
+    .btn-filter-toggle {
+      background: rgba(15, 23, 42, 0.65);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+    }
+
+    /* FILTER DRAWER */
+    .filter-bar {
+      background: #0f172a;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 10px 0;
+      display: none;
+    }
+
+    .filter-bar.open {
+      display: block;
+    }
+
+    .filter-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      align-items: end;
+    }
+
+    .filter-item label {
+      display: block;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #fda4af;
+      margin-bottom: 3px;
+      letter-spacing: 0.03em;
+    }
+
+    .filter-item select {
+      width: 100%;
+      background: #1e293b;
+      color: #ffffff;
+      border: 1px solid #334155;
+      border-radius: 7px;
+      padding: 8px 8px;
+      font-size: 12px;
+      font-weight: 500;
+      outline: none;
+    }
+
+    .btn-reset {
+      width: 100%;
+      background: #334155;
+      color: #f8fafc;
+      border: 1px solid #475569;
+      border-radius: 7px;
+      padding: 8px 10px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      grid-column: span 2;
+    }
+
+    /* CONTEXT BANNER */
+    .context-banner {
+      background: #ffffff;
+      border: 1px solid var(--slate-200);
+      border-radius: 12px;
+      padding: 10px 12px;
+      margin-top: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+    }
+
+    .context-main {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+    }
+
+    .context-dot {
+      width: 26px;
+      height: 26px;
+      border-radius: 7px;
+      background: var(--wine-100);
+      color: var(--wine-900);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .context-legend {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 11px;
+      color: var(--slate-500);
+      border-top: 1px solid var(--slate-100);
+      padding-top: 6px;
+    }
+
+    .dot-green, .dot-red {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-right: 4px;
+    }
+    .dot-green { background: #10b981; }
+    .dot-red { background: #f43f5e; }
+
+    /* KPI GRID (2 COLUMNS ON MOBILE, 5 ON DESKTOP) */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .kpi-card {
+      background: #ffffff;
+      border: 1px solid var(--slate-200);
+      border-radius: 12px;
+      padding: 11px 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+      min-width: 0;
+    }
+
+    .kpi-card.highlight {
+      border: 2px solid rgba(136, 19, 55, 0.28);
+      background: linear-gradient(180deg, #ffffff 0%, #fff1f2 100%);
+    }
+
+    .kpi-card.span-2-mobile {
+      grid-column: span 2;
+    }
+
+    .kpi-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 6px;
+    }
+
+    .kpi-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--slate-500);
+      letter-spacing: 0.02em;
+    }
+
+    .kpi-value {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--slate-900);
+      margin-top: 3px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .kpi-value.wine { color: var(--wine-900); }
+    .kpi-value.emerald { color: var(--emerald-700); }
+
+    .kpi-badge-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 7px;
+      background: var(--wine-50);
+      color: var(--wine-900);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .kpi-footer {
+      margin-top: 8px;
+      padding-top: 7px;
+      border-top: 1px solid var(--slate-100);
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      font-size: 10px;
+    }
+
+    .kpi-prev {
+      color: var(--slate-400);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* PROGRESS BAR */
+    .progress-track {
+      width: 100%;
+      height: 8px;
+      background: var(--slate-100);
+      border-radius: 999px;
+      overflow: hidden;
+      margin: 6px 0 4px 0;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--emerald-600);
+      border-radius: 999px;
+      transition: width 0.3s ease;
+    }
+
+    /* MOM BADGES */
+    .mom-up {
+      display: inline-block;
+      color: #047857;
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      padding: 1px 6px;
+      border-radius: 5px;
+      font-weight: 700;
+      font-size: 10px;
+      width: fit-content;
+    }
+
+    .mom-down {
+      display: inline-block;
+      color: #be123c;
+      background: #fff1f2;
+      border: 1px solid #fecdd3;
+      padding: 1px 6px;
+      border-radius: 5px;
+      font-weight: 700;
+      font-size: 10px;
+      width: fit-content;
+    }
+
+    .mom-neutral {
+      color: var(--slate-400);
+      font-weight: 600;
+      font-size: 10px;
+    }
+
+    /* SECTIONS & CARDS */
+    .section-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .panel {
+      background: #ffffff;
+      border: 1px solid var(--slate-200);
+      border-radius: 12px;
+      padding: 14px;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+      min-width: 0;
+    }
+
+    .panel-header {
+      margin-bottom: 12px;
+    }
+
+    .panel-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--slate-900);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .panel-subtitle {
+      font-size: 11px;
+      color: var(--slate-500);
+      margin-top: 2px;
+    }
+
+    /* REPRESENTANTES LIST */
+    .rep-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-height: 310px;
+      overflow-y: auto;
+    }
+
+    .rep-item {
+      border: 1px solid var(--slate-200);
+      background: var(--slate-50);
+      border-radius: 9px;
+      padding: 10px;
+    }
+
+    .rep-item-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .rep-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--slate-900);
+    }
+
+    .rep-meta-sub {
+      font-size: 11px;
+      color: var(--slate-500);
+    }
+
+    /* ABC SECTION */
+    .abc-tabs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4px;
+      background: var(--slate-100);
+      padding: 4px;
+      border-radius: 9px;
+      border: 1px solid var(--slate-200);
+      margin-top: 8px;
+    }
+
+    .abc-tab-btn {
+      border: none;
+      background: transparent;
+      color: var(--slate-600);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 8px 4px;
+      border-radius: 6px;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .abc-tab-btn.active {
+      background: var(--wine-900);
+      color: #ffffff;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    }
+
+    .abc-summary-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+      margin: 12px 0;
+    }
+
+    .abc-box {
+      border-radius: 10px;
+      padding: 10px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .abc-box.class-a { background: #ecfdf5; border: 1px solid #a7f3d0; }
+    .abc-box.class-b { background: #fffbeb; border: 1px solid #fde68a; }
+    .abc-box.class-c { background: #f1f5f9; border: 1px solid #cbd5e1; }
+
+    .abc-tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      padding: 2px 7px;
+      border-radius: 4px;
+      color: #ffffff;
+    }
+    .abc-tag.a { background: #059669; }
+    .abc-tag.b { background: #d97706; }
+    .abc-tag.c { background: #475569; }
+
+    /* TABLES */
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      border: 1px solid var(--slate-200);
+      border-radius: 9px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .swipe-hint {
+      font-size: 10px;
+      color: var(--slate-500);
+      background: var(--slate-50);
+      padding: 5px 10px;
+      border-bottom: 1px solid var(--slate-200);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11.5px;
+      text-align: left;
+    }
+
+    th {
+      background: var(--slate-100);
+      color: var(--slate-700);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 10px;
+      padding: 8px 8px;
+      border-bottom: 1px solid var(--slate-200);
+      white-space: nowrap;
+    }
+
+    thead.dark-head th {
+      background: var(--slate-900);
+      color: #ffffff;
+    }
+
+    td {
+      padding: 7px 8px;
+      border-bottom: 1px solid var(--slate-100);
+      color: var(--slate-700);
+      white-space: nowrap;
+    }
+
+    tr:hover td {
+      background-color: var(--slate-50);
+    }
+
+    .text-right { text-align: right; }
+    .text-center { text-align: center; }
+    .font-bold { font-weight: 700; color: var(--slate-900); }
+
+    .sticky-col {
+      position: sticky;
+      left: 0;
+      background: #ffffff;
+      z-index: 5;
+      border-right: 1px solid var(--slate-200);
+    }
+    thead.dark-head th.sticky-col {
+      background: var(--slate-900);
+    }
+
+    /* NATIVE SVG CHART CONTAINERS */
+    .chart-box {
+      width: 100%;
+      overflow-x: auto;
+      padding: 4px 0;
+    }
+
+    /* FOOTER */
+    .footer {
+      margin-top: 24px;
+      padding: 14px 12px;
+      text-align: center;
+      font-size: 11px;
+      color: var(--slate-500);
+      border-top: 1px solid var(--slate-200);
+      background: #ffffff;
+    }
+
+    /* MEDIA QUERIES PARA TABLET E DESKTOP */
+    @media (min-width: 768px) {
+      .container { padding: 0 24px; }
+      .brand-title { font-size: 22px; }
+      .updated-info { display: block; }
+      .btn-filter-toggle { display: none; }
+      .filter-bar { display: block !important; }
+      .filter-grid { grid-template-columns: repeat(9, 1fr); }
+      .btn-reset { grid-column: span 1; }
+      .context-banner { flex-direction: row; align-items: center; justify-content: space-between; }
+      .context-legend { border-top: none; padding-top: 0; }
+      .kpi-grid { grid-template-columns: repeat(5, 1fr); gap: 14px; }
+      .kpi-card.span-2-mobile { grid-column: span 1; }
+      .kpi-value { font-size: 20px; }
+      .kpi-footer { flex-direction: row; align-items: center; justify-content: space-between; font-size: 11px; }
+      .section-grid-2 { grid-template-columns: 7fr 5fr; }
+      .abc-summary-grid { grid-template-columns: repeat(3, 1fr); }
+      .abc-tabs { width: 520px; margin-top: 0; }
+      .swipe-hint { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP HEADER -->
+  <header class="top-header">
+    <div class="container">
+      <div class="header-inner">
+        <div class="brand-box">
+          <div class="brand-icon">💎</div>
+          <div style="min-width:0">
+            <div class="brand-title-row">
+              <span class="brand-title">Intimité Analytics</span>
+              <span class="brand-badge">Star Schema BI</span>
+            </div>
+            <p class="brand-subtitle">Confecção de Moda Íntima — Painel Executivo</p>
+          </div>
+        </div>
+
+        <div class="header-actions">
+          <div class="updated-info">
+            <span class="updated-label">Última Atualização</span>
+            <span id="lblUpdatedAt" class="updated-val">Atualizado</span>
+          </div>
+
+          <label for="fileUpload" class="btn-header btn-upload">
+            <span>📂 Excel</span>
+            <input id="fileUpload" type="file" accept=".xlsx,.xls" style="display:none" />
+          </label>
+
+          <button id="btnToggleMobileFilters" type="button" class="btn-header btn-filter-toggle">
+            <span>⚙️ Filtros</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- BARRA DE FILTROS -->
+    <div id="mobileFilterDrawer" class="filter-bar">
+      <div class="container">
+        <div class="filter-grid">
+          <div class="filter-item">
+            <label>Ano</label>
+            <select id="filterAno">
+              <option value="ALL">Todos os Anos</option>
+            </select>
+          </div>
+
+          <div class="filter-item">
+            <label>Mês (MoM)</label>
+            <select id="filterMes">
+              <option value="ALL">Todos os Meses</option>
+            </select>
+          </div>
+
+          <div class="filter-item">
+            <label>Região (Brasil)</label>
+            <select id="filterRegiao">
+              <option value="ALL">Todas as Regiões</option>
+            </select>
+          </div>
+
+          <div class="filter-item">
+            <label>Estado (UF)</label>
+            <select id="filterUF">
+              <option value="ALL">Todas as UFs</option>
+            </select>
+          </div>
+
+          <div class="filter-item">
+            <label>Representante</label>
+            <select id="filterRep">
+              <option value="ALL">Todos os Reps</option>
+            </select>
+          </div>
+
+          <div class="filter-item">
+            <label>Categoria da Peça</label>
+            <select id="filterCat">
+              <option value="ALL">Todas Categorias</option>
+            </select>
+          </div>
+
+          <div class="filter-item">
+            <label>Cor da Peça</label>
+            <select id="filterCor">
+              <option value="ALL">Todas as Cores</option>
+            </select>
+          </div>
+
+          <div class="filter-item">
+            <label>Tamanho (Grade)</label>
+            <select id="filterTam">
+              <option value="ALL">Todos Tamanhos</option>
+            </select>
+          </div>
+
+          <button id="btnResetFilters" type="button" class="btn-reset">
+            🔄 Limpar Filtros
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <main class="container">
+
+    <!-- BANNER DE CONTEXTO -->
+    <div class="context-banner">
+      <div class="context-main">
+        <div class="context-dot">📅</div>
+        <div>
+          <strong id="lblPeriodoAtivo">Novembro/2026</strong>
+          <span style="color:#94a3b8; margin:0 4px;">•</span>
+          <span id="lblComparacaoMoM" style="color:#64748b;">Comparando MoM com Outubro/2026</span>
+        </div>
+      </div>
+      <div class="context-legend">
+        <span><i class="dot-green"></i>Crescimento MoM</span>
+        <span><i class="dot-red"></i>Queda / Atenção MoM</span>
+      </div>
+    </div>
+
+    <!-- GRADE COM OS 10 CARDS DE KPI -->
+    <section class="kpi-grid">
+
+      <!-- 1. FATURAMENTO BRUTO -->
+      <div class="kpi-card">
+        <div class="kpi-top">
+          <div style="min-width:0">
+            <div class="kpi-label">1. Fat. Bruto</div>
+            <div id="kpiFatBruto" class="kpi-value">R$ 0,00</div>
+          </div>
+          <div class="kpi-badge-icon">R$</div>
+        </div>
+        <div class="kpi-footer">
+          <span id="momFatBruto">--</span>
+          <span id="prevFatBruto" class="kpi-prev">Ant: R$ 0</span>
+        </div>
+      </div>
+
+      <!-- 2. FATURAMENTO LÍQUIDO -->
+      <div class="kpi-card highlight">
+        <div class="kpi-top">
+          <div style="min-width:0">
+            <div class="kpi-label" style="color:#881337">2. Fat. Líquido</div>
+            <div id="kpiFatLiquido" class="kpi-value wine">R$ 0,00</div>
+          </div>
+          <div class="kpi-badge-icon" style="background:#881337; color:#fff">💎</div>
+        </div>
+        <div class="kpi-footer">
+          <span id="momFatLiquido">--</span>
+          <span id="prevFatLiquido" class="kpi-prev">Ant: R$ 0</span>
+        </div>
+      </div>
+
+      <!-- 3. ATINGIMENTO DE META -->
+      <div class="kpi-card span-2-mobile">
+        <div>
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span class="kpi-label">3. Atingimento de Meta</span>
+            <span id="kpiMetaPct" class="kpi-value emerald" style="margin:0; font-size:16px;">0,0%</span>
+          </div>
+          <div class="progress-track">
+            <div id="barMeta" class="progress-fill" style="width:0%"></div>
+          </div>
+          <div id="lblMetaValor" style="font-size:11px; color:#64748b;">Meta: R$ 0,00</div>
+        </div>
+        <div class="kpi-footer">
+          <span id="momMeta">--</span>
+          <span id="lblGapMeta" class="kpi-prev">Saldo: R$ 0</span>
+        </div>
+      </div>
+
+      <!-- 4. TOTAL DE PEDIDOS -->
+      <div class="kpi-card">
+        <div class="kpi-top">
+          <div>
+            <div class="kpi-label">4. Total Pedidos</div>
+            <div id="kpiPedidos" class="kpi-value">0</div>
+          </div>
+          <div class="kpi-badge-icon">🛍️</div>
+        </div>
+        <div class="kpi-footer">
+          <span id="momPedidos">--</span>
+          <span id="prevPedidos" class="kpi-prev">Ant: 0 ped.</span>
+        </div>
+      </div>
+
+      <!-- 5. TICKET MÉDIO -->
+      <div class="kpi-card">
+        <div class="kpi-top">
+          <div style="min-width:0">
+            <div class="kpi-label">5. Ticket Médio</div>
+            <div id="kpiTicketMedio" class="kpi-value">R$ 0,00</div>
+          </div>
+          <div class="kpi-badge-icon">🧾</div>
+        </div>
+        <div class="kpi-footer">
+          <span id="momTicketMedio">--</span>
+          <span id="prevTicketMedio" class="kpi-prev">Ant: R$ 0</span>
+        </div>
+      </div>
+
+      <!-- 6. TOTAL DE PEÇAS VENDIDAS -->
+      <div class="kpi-card">
+        <div class="kpi-top">
+          <div style="min-width:0">
+            <div class="kpi-label">6. Peças Vendidas</div>
+            <div id="kpiPecas" class="kpi-value">0 pçs</div>
+          </div>
+          <div class="kpi-badge-icon">👙</div>
+        </div>
+        <div class="kpi-footer">
+          <span id="momPecas">--</span>
+          <span id="subPecasPorPedido" class="kpi-prev">0 pçs/ped</span>
+        </div>
+      </div>
+
+      <!-- 7. CLIENTES ATENDIDOS -->
+      <div class="kpi-card">
+        <div class="kpi-top">
+          <div>
+            <div class="kpi-label">7. Clientes Atend.</div>
+            <div id="kpiClientesAtendidos" class="kpi-value">0</div>
+          </div>
+          <div class="kpi-badge-icon">👥</div>
+        </div>
+        <div class="kpi-footer">
+          <span id="momClientesAtendidos">--</span>
+          <span id="subCarteiraTotal" class="kpi-prev">Base: 0</span>
+        </div>
+      </div>
+
+      <!-- 8. CLIENTES NOVOS -->
+      <div class="kpi-card">
+        <div class="kpi-top">
+          <div>
+            <div class="kpi-label">8. Clientes Novos</div>
+            <div id="kpiClientesNovos" class="kpi-value emerald">0</div>
+          </div>
+          <div class="kpi-badge-icon">✨</div>
+        </div>
+        <div class="kpi-footer">
+          <span id="momClientesNovos">--</span>
+          <span id="subShareNovos" class="kpi-prev">0% dos atend.</span>
+        </div>
+      </div>
+
+      <!-- 9. CIDADES E UFS ATENDIDAS -->
+      <div class="kpi-card">
+        <div class="kpi-top">
+          <div style="min-width:0">
+            <div class="kpi-label">9. Cidades e UFs</div>
+            <div style="display:flex; align-items:baseline; gap:5px; margin-top:3px;">
+              <span id="kpiCidades" class="kpi-value" style="margin:0">0 Cid.</span>
+              <span id="kpiUFs" style="font-size:10px; font-weight:700; background:#f1f5f9; padding:2px 5px; border-radius:4px;">0 UFs</span>
+            </div>
+          </div>
+          <div class="kpi-badge-icon">📍</div>
+        </div>
+        <div class="kpi-footer">
+          <span id="momCidades">--</span>
+          <span id="prevCidadesUFs" class="kpi-prev">Ant: 0 cid</span>
+        </div>
+      </div>
+
+      <!-- 10. DESCONTO MÉDIO -->
+      <div class="kpi-card">
+        <div class="kpi-top">
+          <div>
+            <div class="kpi-label">10. Desc. Médio</div>
+            <div id="kpiDescontoPct" class="kpi-value">0,00%</div>
+          </div>
+          <div class="kpi-badge-icon">%</div>
+        </div>
+        <div class="kpi-footer">
+          <span id="momDesconto">--</span>
+          <span id="subDescontoValor" class="kpi-prev">R$ 0 desc.</span>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- LINHA 2: EVOLUÇÃO MoM & RANKING DE REPRESENTANTES -->
+    <section class="section-grid-2">
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">📈 11. Evolução Mensal (MoM) — Líquido vs Meta</div>
+          <div class="panel-subtitle">Faturamento Líquido (Vinho), Meta Comercial (Tracejado) e Variação % MoM</div>
+        </div>
+        <div id="svgChartMoM" class="chart-box"></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">🏆 Ranking de Representantes & Metas</div>
+          <div class="panel-subtitle">Desempenho individual, atingimento de meta e MoM</div>
+        </div>
+        <div id="repListContainer" class="rep-list"></div>
+      </div>
+    </section>
+
+    <!-- LINHA 3: CURVA ABC COMPLETA -->
+    <section class="panel" style="margin-top:14px;">
+      <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:10px; border-bottom:1px solid #f1f5f9; padding-bottom:10px;">
+        <div>
+          <div class="panel-title">📊 12. Análise de Curva ABC (Pareto 80 / 15 / 5)</div>
+          <div class="panel-subtitle">Classificação automática por participação acumulada no Faturamento Líquido</div>
+        </div>
+        <div class="abc-tabs">
+          <button id="btnAbcProdutos" type="button" class="abc-tab-btn active">Por Produto</button>
+          <button id="btnAbcCores" type="button" class="abc-tab-btn">Por Cor</button>
+          <button id="btnAbcTamanhos" type="button" class="abc-tab-btn">Por Tamanho</button>
+          <button id="btnAbcClientes" type="button" class="abc-tab-btn">Por Cliente</button>
+          <button id="btnAbcCategorias" type="button" class="abc-tab-btn">Categoria</button>
+        </div>
+      </div>
+
+      <div class="abc-summary-grid">
+        <div class="abc-box class-a">
+          <div>
+            <span class="abc-tag a">Classe A (Até 80%)</span>
+            <div id="abcSummaryAVal" style="font-size:16px; font-weight:800; color:#064e3b; margin-top:4px;">R$ 0,00</div>
+            <div id="abcSummaryACount" style="font-size:11px; color:#047857;">0 itens</div>
+          </div>
+          <div style="text-align:right">
+            <div id="abcSummaryAShare" style="font-size:20px; font-weight:900; color:#047857;">80%</div>
+            <span style="font-size:10px; color:#047857;">da receita</span>
+          </div>
+        </div>
+
+        <div class="abc-box class-b">
+          <div>
+            <span class="abc-tag b">Classe B (80% a 95%)</span>
+            <div id="abcSummaryBVal" style="font-size:16px; font-weight:800; color:#78350f; margin-top:4px;">R$ 0,00</div>
+            <div id="abcSummaryBCount" style="font-size:11px; color:#b45309;">0 itens</div>
+          </div>
+          <div style="text-align:right">
+            <div id="abcSummaryBShare" style="font-size:20px; font-weight:900; color:#d97706;">15%</div>
+            <span style="font-size:10px; color:#b45309;">da receita</span>
+          </div>
+        </div>
+
+        <div class="abc-box class-c">
+          <div>
+            <span class="abc-tag c">Classe C (95% a 100%)</span>
+            <div id="abcSummaryCVal" style="font-size:16px; font-weight:800; color:#1e293b; margin-top:4px;">R$ 0,00</div>
+            <div id="abcSummaryCCount" style="font-size:11px; color:#475569;">0 itens</div>
+          </div>
+          <div style="text-align:right">
+            <div id="abcSummaryCShare" style="font-size:20px; font-weight:900; color:#475569;">5%</div>
+            <span style="font-size:10px; color:#475569;">da receita</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-grid-2" style="margin-top:8px;">
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:9px; padding:10px;">
+          <div style="font-size:11px; font-weight:700; text-transform:uppercase; color:#64748b; margin-bottom:6px;">
+            Gráfico de Pareto (Top Itens & % Acumulado)
+          </div>
+          <div id="svgChartABC" class="chart-box"></div>
+        </div>
+
+        <div class="table-wrap" style="max-height:320px; overflow-y:auto;">
+          <div class="swipe-hint">
+            <span>Tabela Detalhada ABC</span>
+            <span>↔ Deslize para o lado</span>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th id="thAbcTitle">Produto / Referência</th>
+                <th class="text-right">Peças</th>
+                <th class="text-right">Fat. Líquido</th>
+                <th class="text-right">% Share</th>
+                <th class="text-right">% Acum.</th>
+                <th class="text-center">Classe</th>
+              </tr>
+            </thead>
+            <tbody id="tbodyABC"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- LINHA 4: GEOGRAFIA (UFS E CIDADES) + MATRIZ HISTÓRICA MoM -->
+    <section class="section-grid-2">
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">🗺️ Estados (UFs) & Cidades Atendidas</div>
+          <div class="panel-subtitle">Faturamento líquido por UF e municípios atendidos</div>
+        </div>
+        <div id="svgChartUF" class="chart-box" style="margin-bottom:10px;"></div>
+        <div class="table-wrap" style="max-height:210px; overflow-y:auto;">
+          <table>
+            <thead>
+              <tr>
+                <th>Cidade / UF</th>
+                <th class="text-center">Clientes</th>
+                <th class="text-center">Pedidos</th>
+                <th class="text-right">Fat. Líquido</th>
+              </tr>
+            </thead>
+            <tbody id="tbodyCidades"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">📅 Matriz Histórica Month-over-Month (MoM)</div>
+          <div class="panel-subtitle">Comparativo mês a mês de todos os 12 indicadores</div>
+        </div>
+        <div class="table-wrap">
+          <div class="swipe-hint">
+            <span>Coluna Indicador fixa</span>
+            <span>↔ Deslize para ver os meses</span>
+          </div>
+          <table>
+            <thead id="theadMoMMatrix" class="dark-head"></thead>
+            <tbody id="tbodyMoMMatrix"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <strong>Intimité Analytics</strong> • Painel Autônomo Compatível com Celular e Desktop (Star Schema BI)
+  </footer>
+
+  <!-- Carrega o arquivo de dados gerado pelo Python -->
+  <script src="dados.js"></script>
+
+  <!-- MOTOR DE BI + GRÁFICOS VETORIAIS NATIVOS (ZERO DEPENDÊNCIA DE CDN EXTERNO) -->
+  <script>
+    let starData = window.STAR_SCHEMA_DATA || {
+      updatedAt: "Sem dados",
+      dProdutos: [],
+      dRepresentantes: [],
+      dClientes: [],
+      fPedidos: []
+    };
+
+    let currentAbcMode = "PRODUTO";
+
+    const MONTH_NAMES = {
+      "01": "Jan", "02": "Fev", "03": "Mar", "04": "Abr",
+      "05": "Mai", "06": "Jun", "07": "Jul", "08": "Ago",
+      "09": "Set", "10": "Out", "11": "Nov", "12": "Dez"
+    };
+
+    const UF_TO_REGIAO = {
+      "SP": "Sudeste", "RJ": "Sudeste", "MG": "Sudeste", "ES": "Sudeste",
+      "PR": "Sul", "SC": "Sul", "RS": "Sul",
+      "BA": "Nordeste", "PE": "Nordeste", "CE": "Nordeste", "RN": "Nordeste",
+      "PB": "Nordeste", "AL": "Nordeste", "SE": "Nordeste", "MA": "Nordeste", "PI": "Nordeste",
+      "GO": "Centro-Oeste", "DF": "Centro-Oeste", "MT": "Centro-Oeste", "MS": "Centro-Oeste",
+      "AM": "Norte", "PA": "Norte", "TO": "Norte", "RO": "Norte", "AC": "Norte", "AP": "Norte", "RR": "Norte"
+    };
+
+    function getRegiaoByUF(uf) {
+      const cleanUF = String(uf || "SP").trim().toUpperCase();
+      return UF_TO_REGIAO[cleanUF] || "Sudeste";
+    }
+
+    function formatMonthLabel(ym) {
+      if (!ym || ym === "ALL") return "Todos os Meses";
+      const parts = String(ym).split("-");
+      if (parts.length !== 2) return ym;
+      return (MONTH_NAMES[parts[1]] || parts[1]) + "/" + parts[0].slice(2);
+    }
+
+    function fmtBRL(val) {
+      const n = Number(val || 0);
+      return "R$ " + n.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    function fmtCompactBRL(val) {
+      const n = Number(val || 0);
+      if (n >= 1000) return "R$ " + (n / 1000).toFixed(1).replace(".", ",") + "k";
+      return "R$ " + n.toFixed(0);
+    }
+
+    function fmtInt(val) {
+      return Math.round(Number(val || 0)).toLocaleString("pt-BR");
+    }
+
+    function fmtPct(val, decimals = 1) {
+      return Number(val || 0).toFixed(decimals).replace(".", ",") + "%";
+    }
+
+    function renderMoMBadge(curr, prev, isPP = false, invertColor = false, suffix = "MoM") {
+      if (prev === null || prev === undefined || (prev === 0 && curr === 0)) {
+        return '<span class="mom-neutral">Sem base ' + suffix + '</span>';
+      }
+      let diff = 0;
+      let label = "";
+      if (isPP) {
+        diff = curr - prev;
+        const sign = diff > 0 ? "+" : "";
+        label = sign + diff.toFixed(1).replace(".", ",") + " p.p. " + suffix;
+      } else {
+        if (prev === 0) return '<span class="mom-up">▲ +100% ' + suffix + '</span>';
+        diff = ((curr - prev) / prev) * 100;
+        const sign = diff > 0 ? "+" : "";
+        label = sign + diff.toFixed(1).replace(".", ",") + "% " + suffix;
+      }
+      if (Math.abs(diff) < 0.05) {
+        return '<span class="mom-neutral">0,0% ' + suffix + '</span>';
+      }
+      const isGood = invertColor ? diff < 0 : diff > 0;
+      const cls = isGood ? "mom-up" : "mom-down";
+      const arrow = diff > 0 ? "▲" : "▼";
+      return '<span class="' + cls + '">' + arrow + " " + label + "</span>";
+    }
+
+    function getEnrichedFacts() {
+      const cliMap = {};
+      (starData.dClientes || []).forEach(c => {
+        cliMap[String(c.Nome_Cliente).trim().toLowerCase()] = c;
+      });
+      const prodMap = {};
+      (starData.dProdutos || []).forEach(p => {
+        prodMap[String(p.SKU_Produto).trim().toUpperCase()] = p;
+      });
+      const repMap = {};
+      (starData.dRepresentantes || []).forEach(r => {
+        repMap[String(r.Nome_Representante).trim().toLowerCase()] = r;
+      });
+
+      const firstOrderMonthByClient = {};
+      (starData.fPedidos || []).forEach(f => {
+        const cKey = String(f.Nome_Cliente).trim().toLowerCase();
+        const ym = String(f.Ano_Mes || String(f.Data_Pedido).slice(0, 7));
+        if (!firstOrderMonthByClient[cKey] || ym < firstOrderMonthByClient[cKey]) {
+          firstOrderMonthByClient[cKey] = ym;
+        }
+      });
+
+      return (starData.fPedidos || []).map(f => {
+        const cKey = String(f.Nome_Cliente).trim().toLowerCase();
+        const pKey = String(f.SKU_Produto).trim().toUpperCase();
+        const rKey = String(f.Nome_Representante).trim().toLowerCase();
+
+        const cli = cliMap[cKey] || {};
+        const prod = prodMap[pKey] || {};
+        const rep = repMap[rKey] || {};
+
+        const anoMes = String(f.Ano_Mes || String(f.Data_Pedido).slice(0, 7));
+        const ano = anoMes.slice(0, 4);
+        const ufVal = String(cli.UF || "SP").trim().toUpperCase();
+        const regiaoVal = getRegiaoByUF(ufVal);
+        const cliFirstYm = cli.Data_Primeira_Compra
+          ? String(cli.Data_Primeira_Compra).slice(0, 7)
+          : (firstOrderMonthByClient[cKey] || anoMes);
+
+        // Resolução híbrida (Modelagem 2: f.Cor / f.Tamanho na fPedidos | Modelagem 1: prod.Cor / prod.Tamanho / prod.Cod_Referencia na dProdutos)
+        const corVal = String(f.Cor || prod.Cor || "Padrão").trim();
+        const tamVal = String(f.Tamanho || prod.Tamanho || "Único").trim().toUpperCase();
+        const refPai = String(prod.Cod_Referencia || f.SKU_Produto || "").trim().toUpperCase();
+
+        return {
+          ID_Pedido: f.ID_Pedido,
+          Data_Pedido: f.Data_Pedido,
+          Ano: ano,
+          Ano_Mes: anoMes,
+          Nome_Representante: f.Nome_Representante,
+          Nome_Cliente: f.Nome_Cliente,
+          SKU_Produto: f.SKU_Produto,
+          Cod_Referencia: refPai,
+          Cor: corVal,
+          Tamanho: tamVal,
+          Qtd_Pecas: Number(f.Qtd_Pecas || 0),
+          Valor_Bruto: Number(f.Valor_Bruto || 0),
+          Valor_Desconto: Number(f.Valor_Desconto || 0),
+          Valor_Liquido: Number(f.Valor_Liquido || 0),
+          Cidade: cli.Cidade || "Não Informada",
+          UF: ufVal,
+          Regiao: regiaoVal,
+          Cliente_Primeira_Compra_YM: cliFirstYm,
+          Nome_Produto: prod.Nome_Produto || f.SKU_Produto,
+          Categoria: prod.Categoria || "Outros",
+          Regiao_Rep: rep.Regiao_Atuacao || "Geral"
+        };
+      });
+    }
+
+    function getTargetForSelection(monthsList, selectedRep) {
+      const ymSet = new Set(monthsList);
+      const repIdToName = {};
+      (starData.dRepresentantes || []).forEach(r => {
+        repIdToName[String(r.ID_Rep || "").trim().toUpperCase()] = String(r.Nome_Representante || "");
+      });
+
+      if (starData.fMetas && starData.fMetas.length > 0) {
+        let totalMeta = 0;
+        starData.fMetas.forEach(m => {
+          const ym = String(m.Ano_Mes || String(m.Data_Meta || "").slice(0, 7));
+          if (ymSet.has(ym)) {
+            const rid = String(m.ID_Rep || "").trim().toUpperCase();
+            const rname = repIdToName[rid] || "";
+            if (selectedRep === "ALL" || rname === selectedRep || rid === String(selectedRep).toUpperCase()) {
+              totalMeta += Number(m.Valor_Meta || 0);
+            }
+          }
+        });
+        return totalMeta;
+      }
+
+      const reps = (starData.dRepresentantes || []).filter(r =>
+        selectedRep === "ALL" || r.Nome_Representante === selectedRep
+      );
+      let totalMeta = 0;
+      monthsList.forEach(ym => {
+        const colKey = "Meta_" + ym.replace("-", "_");
+        reps.forEach(r => {
+          const val = (r[colKey] !== undefined && r[colKey] !== null && r[colKey] !== "")
+            ? Number(r[colKey])
+            : Number(r.Meta_Padrao || 0);
+          totalMeta += val;
+        });
+      });
+      return totalMeta;
+    }
+
+    function computeMetrics(rows, monthsForTarget, selectedRep) {
+      let fatBruto = 0, fatLiquido = 0, totalDesconto = 0, totalPecas = 0;
+      const pedidosSet = new Set(), clientesSet = new Set(), clientesNovosSet = new Set(), cidadesSet = new Set(), ufsSet = new Set();
+
+      rows.forEach(r => {
+        fatBruto += r.Valor_Bruto;
+        fatLiquido += r.Valor_Liquido;
+        totalDesconto += r.Valor_Desconto;
+        totalPecas += r.Qtd_Pecas;
+        pedidosSet.add(r.ID_Pedido);
+        clientesSet.add(r.Nome_Cliente);
+        if (r.Cliente_Primeira_Compra_YM === r.Ano_Mes) clientesNovosSet.add(r.Nome_Cliente);
+        if (r.Cidade) cidadesSet.add(r.Cidade + "-" + r.UF);
+        if (r.UF) ufsSet.add(r.UF);
+      });
+
+      const totalPedidos = pedidosSet.size;
+      const ticketMedio = totalPedidos > 0 ? fatLiquido / totalPedidos : 0;
+      const pecasPorPedido = totalPedidos > 0 ? totalPecas / totalPedidos : 0;
+      const descontoMedioPct = fatBruto > 0 ? (totalDesconto / fatBruto) * 100 : 0;
+      const metaValor = getTargetForSelection(monthsForTarget, selectedRep);
+      const atingimentoMetaPct = metaValor > 0 ? (fatLiquido / metaValor) * 100 : 0;
+
+      return {
+        fatBruto, fatLiquido, totalDesconto, descontoMedioPct,
+        metaValor, atingimentoMetaPct, totalPedidos, ticketMedio,
+        totalPecas, pecasPorPedido,
+        clientesAtendidos: clientesSet.size,
+        clientesNovos: clientesNovosSet.size,
+        qtdCidades: cidadesSet.size,
+        qtdUFs: ufsSet.size
+      };
+    }
+
+    function updateMesOptions(enriched, keepSelection) {
+      const selAno = document.getElementById("filterAno").value || "ALL";
+      const selMes = document.getElementById("filterMes");
+      const prevMesVal = selMes.value;
+      const months = Array.from(new Set(
+        enriched.filter(r => selAno === "ALL" || r.Ano === selAno).map(r => r.Ano_Mes)
+      )).sort();
+
+      selMes.innerHTML = '<option value="ALL">' + (selAno === "ALL" ? "Todos os Meses" : "Todos de " + selAno) + '</option>';
+      months.forEach(m => {
+        selMes.innerHTML += '<option value="' + m + '">' + formatMonthLabel(m) + '</option>';
+      });
+      if (keepSelection && prevMesVal && (prevMesVal === "ALL" || months.includes(prevMesVal))) {
+        selMes.value = prevMesVal;
+      } else if (months.length > 0) {
+        selMes.value = months[months.length - 1];
+      } else {
+        selMes.value = "ALL";
+      }
+    }
+
+    function updateUFOptions(enriched, keepSelection) {
+      const selRegiao = document.getElementById("filterRegiao").value || "ALL";
+      const selUF = document.getElementById("filterUF");
+      const prevUF = selUF.value || "ALL";
+      const ufs = Array.from(new Set(
+        enriched.filter(r => selRegiao === "ALL" || r.Regiao === selRegiao).map(r => r.UF)
+      )).sort();
+
+      selUF.innerHTML = '<option value="ALL">' + (selRegiao === "ALL" ? "Todas as UFs" : "Todas (" + selRegiao + ")") + '</option>';
+      ufs.forEach(u => {
+        selUF.innerHTML += '<option value="' + u + '">' + u + '</option>';
+      });
+      selUF.value = (keepSelection && ufs.includes(prevUF)) ? prevUF : "ALL";
+    }
+
+    function populateFilters() {
+      const enriched = getEnrichedFacts();
+      const years = Array.from(new Set(enriched.map(r => r.Ano))).sort();
+      const regioesOrder = ["Sudeste", "Sul", "Nordeste", "Centro-Oeste", "Norte"];
+      const existingRegioes = new Set(enriched.map(r => r.Regiao));
+      const regioes = regioesOrder.filter(rg => existingRegioes.has(rg));
+      const reps = Array.from(new Set((starData.dRepresentantes || []).map(r => r.Nome_Representante))).sort();
+      const cats = Array.from(new Set(enriched.map(r => r.Categoria))).sort();
+
+      const selAno = document.getElementById("filterAno");
+      selAno.innerHTML = '<option value="ALL">Todos os Anos</option>';
+      years.forEach(y => { selAno.innerHTML += '<option value="' + y + '">' + y + '</option>'; });
+      if (years.length > 0) selAno.value = years[years.length - 1];
+
+      const selRegiao = document.getElementById("filterRegiao");
+      selRegiao.innerHTML = '<option value="ALL">Todas as Regiões</option>';
+      regioes.forEach(rg => { selRegiao.innerHTML += '<option value="' + rg + '">' + rg + '</option>'; });
+
+      updateMesOptions(enriched, false);
+      updateUFOptions(enriched, false);
+
+      const selRep = document.getElementById("filterRep");
+      selRep.innerHTML = '<option value="ALL">Todos os Reps</option>';
+      reps.forEach(rp => { selRep.innerHTML += '<option value="' + rp + '">' + rp + '</option>'; });
+
+      const selCat = document.getElementById("filterCat");
+      selCat.innerHTML = '<option value="ALL">Todas Categorias</option>';
+      cats.forEach(c => { selCat.innerHTML += '<option value="' + c + '">' + c + '</option>'; });
+
+      const cores = Array.from(new Set(enriched.map(r => r.Cor))).filter(Boolean).sort();
+      const selCor = document.getElementById("filterCor");
+      if (selCor) {
+        selCor.innerHTML = '<option value="ALL">Todas as Cores</option>';
+        cores.forEach(cr => { selCor.innerHTML += '<option value="' + cr + '">' + cr + '</option>'; });
+      }
+
+      const tamOrder = ["PP", "P", "M", "G", "GG", "EG", "EGG", "ÚNICO"];
+      const rawTams = Array.from(new Set(enriched.map(r => r.Tamanho))).filter(Boolean);
+      const tams = rawTams.sort((a, b) => {
+        const ia = tamOrder.indexOf(a.toUpperCase());
+        const ib = tamOrder.indexOf(b.toUpperCase());
+        if (ia !== -1 && ib !== -1) return ia - ib;
+        if (ia !== -1) return -1;
+        if (ib !== -1) return 1;
+        return a.localeCompare(b);
+      });
+      const selTam = document.getElementById("filterTam");
+      if (selTam) {
+        selTam.innerHTML = '<option value="ALL">Todos Tamanhos</option>';
+        tams.forEach(tm => { selTam.innerHTML += '<option value="' + tm + '">' + tm + '</option>'; });
+      }
+
+      document.getElementById("lblUpdatedAt").textContent = starData.updatedAt || "Agora";
+    }
+
+    // Renderizador Nativo de Gráfico SVG de Evolução Mensal MoM (Funciona 100% Offline)
+    function drawNativeMoMChart(monthlyStats) {
+      const container = document.getElementById("svgChartMoM");
+      if (!monthlyStats.length) {
+        container.innerHTML = '<div style="padding:20px; text-align:center; color:#94a3b8;">Sem dados para o período</div>';
+        return;
+      }
+      const w = Math.max(320, monthlyStats.length * 78);
+      const h = 210;
+      const padL = 46, padR = 16, padT = 26, padB = 34;
+      const plotW = w - padL - padR;
+      const plotH = h - padT - padB;
+
+      const maxVal = Math.max(...monthlyStats.map(s => Math.max(s.fatBruto, s.fatLiquido, s.metaValor)), 1000) * 1.12;
+      const stepX = plotW / monthlyStats.length;
+      const barW = Math.min(28, stepX * 0.46);
+
+      let svg = `<svg viewBox="0 0 ${w} ${h}" width="100%" height="${h}" xmlns="http://www.w3.org/2000/svg">`;
+
+      // Linhas de grade horizontais
+      for (let i = 0; i <= 3; i++) {
+        const y = padT + (plotH * i) / 3;
+        const val = maxVal * (1 - i / 3);
+        svg += `<line x1="${padL}" y1="${y}" x2="${w - padR}" y2="${y}" stroke="#e2e8f0" stroke-dasharray="3,3"/>`;
+        svg += `<text x="${padL - 4}" y="${y + 3}" text-anchor="end" font-size="9" fill="#64748b">${fmtCompactBRL(val)}</text>`;
+      }
+
+      // Barras de Faturamento Líquido e Pontos de Meta
+      let metaPoints = [];
+      monthlyStats.forEach((s, idx) => {
+        const cx = padL + idx * stepX + stepX / 2;
+        const hLiq = (s.fatLiquido / maxVal) * plotH;
+        const yLiq = padT + plotH - hLiq;
+
+        const hMeta = (s.metaValor / maxVal) * plotH;
+        const yMeta = padT + plotH - hMeta;
+        metaPoints.push(`${cx},${yMeta}`);
+
+        // Barra Faturamento Líquido
+        svg += `<rect x="${cx - barW / 2}" y="${yLiq}" width="${barW}" height="${Math.max(2, hLiq)}" rx="4" fill="#881337"/>`;
+
+        // Rótulo de valor e MoM acima da barra
+        const momTxt = idx > 0 ? ((s.momGrowth >= 0 ? "+" : "") + s.momGrowth.toFixed(0) + "%") : "";
+        const momColor = s.momGrowth >= 0 ? "#047857" : "#be123c";
+        svg += `<text x="${cx}" y="${Math.max(11, yLiq - 5)}" text-anchor="middle" font-size="9" font-weight="bold" fill="#1e293b">${fmtCompactBRL(s.fatLiquido)}</text>`;
+        if (momTxt) {
+          svg += `<text x="${cx}" y="${ h - 4 }" text-anchor="middle" font-size="8.5" font-weight="bold" fill="${momColor}">${momTxt}</text>`;
+        }
+        svg += `<text x="${cx}" y="${h - 15}" text-anchor="middle" font-size="9.5" font-weight="600" fill="#334155">${s.label}</text>`;
+      });
+
+      // Linha de Meta
+      if (metaPoints.length > 1) {
+        svg += `<polyline fill="none" stroke="#059669" stroke-width="2" stroke-dasharray="4,3" points="${metaPoints.join(" ")}"/>`;
+      }
+      metaPoints.forEach(pt => {
+        const [px, py] = pt.split(",");
+        svg += `<circle cx="${px}" cy="${py}" r="3.5" fill="#059669"/>`;
+      });
+
+      svg += `</svg>`;
+      container.innerHTML = svg;
+    }
+
+    // Renderizador Nativo de Gráfico de Pareto ABC (Barras + Linha % Acumulada)
+    function drawNativeABCChart(items) {
+      const container = document.getElementById("svgChartABC");
+      const top = items.slice(0, 10);
+      if (!top.length) {
+        container.innerHTML = '<div style="padding:20px; text-align:center; color:#94a3b8;">Sem dados</div>';
+        return;
+      }
+      const w = Math.max(320, top.length * 52);
+      const h = 210;
+      const padL = 42, padR = 30, padT = 22, padB = 38;
+      const plotW = w - padL - padR;
+      const plotH = h - padT - padB;
+      const maxVal = Math.max(...top.map(i => i.fatLiquido), 100) * 1.1;
+      const stepX = plotW / top.length;
+      const barW = Math.min(24, stepX * 0.55);
+
+      let svg = `<svg viewBox="0 0 ${w} ${h}" width="100%" height="${h}" xmlns="http://www.w3.org/2000/svg">`;
+
+      // Linha de corte 80% (Classe A)
+      const y80 = padT + plotH * (1 - 0.8);
+      svg += `<line x1="${padL}" y1="${y80}" x2="${w - padR}" y2="${y80}" stroke="#059669" stroke-dasharray="3,3" stroke-width="1"/>`;
+      svg += `<text x="${w - padR + 2}" y="${y80 + 3}" font-size="8.5" fill="#059669" font-weight="bold">80%</text>`;
+
+      let linePts = [];
+      top.forEach((it, idx) => {
+        const cx = padL + idx * stepX + stepX / 2;
+        const bh = (it.fatLiquido / maxVal) * plotH;
+        const by = padT + plotH - bh;
+        const color = it.classe === "A" ? "#059669" : it.classe === "B" ? "#d97706" : "#64748b";
+
+        svg += `<rect x="${cx - barW / 2}" y="${by}" width="${barW}" height="${Math.max(2, bh)}" rx="3" fill="${color}"/>`;
+
+        const shortKey = String(it.key).length > 8 ? String(it.key).slice(0, 8) : String(it.key);
+        svg += `<text x="${cx}" y="${h - 14}" text-anchor="middle" font-size="8.5" font-weight="600" fill="#334155">${shortKey}</text>`;
+        svg += `<text x="${cx}" y="${h - 4}" text-anchor="middle" font-size="8" font-weight="bold" fill="${color}">[${it.classe}]</text>`;
+
+        const py = padT + plotH * (1 - it.acumPct / 100);
+        linePts.push(`${cx},${py}`);
+      });
+
+      if (linePts.length > 1) {
+        svg += `<polyline fill="none" stroke="#0f172a" stroke-width="2" points="${linePts.join(" ")}"/>`;
+      }
+      linePts.forEach((pt, idx) => {
+        const [px, py] = pt.split(",");
+        svg += `<circle cx="${px}" cy="${py}" r="3" fill="#0f172a"/>`;
+        if (idx === 0 || idx === linePts.length - 1 || top[idx].classe === "A") {
+          svg += `<text x="${px}" y="${Math.max(10, Number(py) - 5)}" text-anchor="middle" font-size="8" font-weight="bold" fill="#0f172a">${top[idx].acumPct.toFixed(0)}%</text>`;
+        }
+      });
+
+      svg += `</svg>`;
+      container.innerHTML = svg;
+    }
+
+    // Renderizador Nativo de Barras Horizontais por UF
+    function drawNativeUFChart(ufEntries) {
+      const container = document.getElementById("svgChartUF");
+      if (!ufEntries.length) {
+        container.innerHTML = "";
+        return;
+      }
+      const maxVal = Math.max(...ufEntries.map(e => e[1]), 1);
+      let html = '<div style="display:flex; flex-direction:column; gap:6px;">';
+      ufEntries.forEach(([uf, val]) => {
+        const pct = Math.max(4, Math.round((val / maxVal) * 100));
+        html += `
+          <div style="display:flex; align-items:center; gap:8px; font-size:11px;">
+            <strong style="width:28px; color:#0f172a;">${uf}</strong>
+            <div style="flex:1; background:#f1f5f9; height:14px; border-radius:4px; overflow:hidden;">
+              <div style="width:${pct}%; background:#9f1239; height:100%; border-radius:4px;"></div>
+            </div>
+            <span style="width:88px; text-align:right; font-weight:700; color:#1e293b;">${fmtBRL(val)}</span>
+          </div>
+        `;
+      });
+      html += "</div>";
+      container.innerHTML = html;
+    }
+
+    function updateDashboard() {
+      const enriched = getEnrichedFacts();
+      const globalMonths = Array.from(new Set(enriched.map(r => r.Ano_Mes))).sort();
+      const globalYears = Array.from(new Set(enriched.map(r => r.Ano))).sort();
+
+      const selAno = document.getElementById("filterAno").value || "ALL";
+      const selMes = document.getElementById("filterMes").value || "ALL";
+      const selRegiao = document.getElementById("filterRegiao").value || "ALL";
+      const selUF = document.getElementById("filterUF").value || "ALL";
+      const selRep = document.getElementById("filterRep").value || "ALL";
+      const selCat = document.getElementById("filterCat").value || "ALL";
+      const selCor = (document.getElementById("filterCor") && document.getElementById("filterCor").value) || "ALL";
+      const selTam = (document.getElementById("filterTam") && document.getElementById("filterTam").value) || "ALL";
+
+      const allMonths = globalMonths.filter(ym => selAno === "ALL" || ym.startsWith(selAno));
+
+      const dimFiltered = enriched.filter(r => {
+        if (selRegiao !== "ALL" && r.Regiao !== selRegiao) return false;
+        if (selUF !== "ALL" && r.UF !== selUF) return false;
+        if (selRep !== "ALL" && r.Nome_Representante !== selRep) return false;
+        if (selCat !== "ALL" && r.Categoria !== selCat) return false;
+        if (selCor !== "ALL" && r.Cor !== selCor) return false;
+        if (selTam !== "ALL" && r.Tamanho !== selTam) return false;
+        return true;
+      });
+
+      const baseFiltered = dimFiltered.filter(r => selAno === "ALL" || r.Ano === selAno);
+      const currentRows = selMes === "ALL" ? baseFiltered : baseFiltered.filter(r => r.Ano_Mes === selMes);
+      const currentMonthsList = selMes === "ALL" ? allMonths : [selMes];
+
+      // Decide automaticamente entre modo MoM (quando 1 mês específico está selecionado)
+      // e modo YoY (quando um Ano e "Todo o Ano" estão selecionados!)
+      let isYoYMode = false;
+      let compSuffix = "MoM";
+      let prevLabelShort = "Ant";
+      let prevMonth = null;
+      let prevYear = null;
+      let prevRows = [];
+      let prevMonthsForTarget = [];
+
+      if (selMes !== "ALL") {
+        // Modo Mês Específico -> MoM vs mês anterior
+        compSuffix = "MoM";
+        const idx = globalMonths.indexOf(selMes);
+        if (idx > 0) {
+          prevMonth = globalMonths[idx - 1];
+          prevLabelShort = formatMonthLabel(prevMonth);
+          prevRows = dimFiltered.filter(r => r.Ano_Mes === prevMonth);
+          prevMonthsForTarget = [prevMonth];
+        }
+      } else if (selAno !== "ALL") {
+        // Modo Ano Inteiro selecionado ("Todo o Ano") -> YoY (Year-over-Year) vs Ano Anterior!
+        isYoYMode = true;
+        compSuffix = "YoY";
+        const yIdx = globalYears.indexOf(selAno);
+        if (yIdx > 0) {
+          prevYear = globalYears[yIdx - 1];
+          prevLabelShort = prevYear;
+          prevRows = dimFiltered.filter(r => r.Ano === prevYear);
+          prevMonthsForTarget = globalMonths.filter(ym => ym.startsWith(prevYear));
+        }
+      } else if (globalYears.length >= 2) {
+        // Mesmo em "Todos os Anos" + "Todos os Meses", calcula o YoY entre os 2 últimos anos para a Matriz
+        isYoYMode = false;
+      }
+
+      const currM = computeMetrics(currentRows, currentMonthsList, selRep);
+      const hasPrevBase = (selMes !== "ALL" && prevMonth !== null) || (isYoYMode && prevYear !== null);
+      const prevM = hasPrevBase ? computeMetrics(prevRows, prevMonthsForTarget, selRep) : null;
+
+      const regiaoTag = selRegiao !== "ALL" ? " • " + selRegiao : "";
+      document.getElementById("lblPeriodoAtivo").textContent =
+        selMes === "ALL"
+          ? (selAno === "ALL" ? "Acumulado Geral (" + allMonths.length + " meses)" : "Ano " + selAno + " Completo (" + allMonths.length + " meses)") + regiaoTag
+          : "Mês: " + formatMonthLabel(selMes) + regiaoTag;
+
+      if (selMes !== "ALL") {
+        document.getElementById("lblComparacaoMoM").textContent = prevMonth
+          ? "Comparando MoM vs " + formatMonthLabel(prevMonth)
+          : "1º mês da série histórica";
+      } else if (selAno !== "ALL") {
+        document.getElementById("lblComparacaoMoM").textContent = prevYear
+          ? "Comparativo Anual YoY (Year-over-Year) vs Ano " + prevYear
+          : "1º ano da série histórica (sem ano anterior para YoY)";
+      } else {
+        document.getElementById("lblComparacaoMoM").textContent =
+          "Visão Multi-Anual • Selecione um Ano para ver YoY nos cards ou um Mês para ver MoM";
+      }
+
+      const fallbackBadge = '<span class="mom-neutral">' + (isYoYMode ? "Sem base YoY" : "Acumulado") + '</span>';
+
+      // Cards (exibem MoM quando filtrado por mês, ou YoY quando filtrado por Ano Inteiro!)
+      document.getElementById("kpiFatBruto").textContent = fmtBRL(currM.fatBruto);
+      document.getElementById("momFatBruto").innerHTML = prevM ? renderMoMBadge(currM.fatBruto, prevM.fatBruto, false, false, compSuffix) : fallbackBadge;
+      document.getElementById("prevFatBruto").textContent = prevM ? prevLabelShort + ": " + fmtCompactBRL(prevM.fatBruto) : "";
+
+      document.getElementById("kpiFatLiquido").textContent = fmtBRL(currM.fatLiquido);
+      document.getElementById("momFatLiquido").innerHTML = prevM ? renderMoMBadge(currM.fatLiquido, prevM.fatLiquido, false, false, compSuffix) : fallbackBadge;
+      document.getElementById("prevFatLiquido").textContent = prevM ? prevLabelShort + ": " + fmtCompactBRL(prevM.fatLiquido) : "";
+
+      document.getElementById("kpiMetaPct").textContent = fmtPct(currM.atingimentoMetaPct, 1);
+      const barEl = document.getElementById("barMeta");
+      barEl.style.width = Math.min(100, Math.max(0, currM.atingimentoMetaPct)) + "%";
+      barEl.style.background = currM.atingimentoMetaPct >= 100 ? "#059669" : currM.atingimentoMetaPct >= 85 ? "#d97706" : "#be123c";
+      document.getElementById("lblMetaValor").textContent = "Meta: " + fmtBRL(currM.metaValor);
+      document.getElementById("momMeta").innerHTML = prevM ? renderMoMBadge(currM.atingimentoMetaPct, prevM.atingimentoMetaPct, true, false, compSuffix) : fallbackBadge;
+      const gapMeta = currM.fatLiquido - currM.metaValor;
+      document.getElementById("lblGapMeta").textContent = (gapMeta >= 0 ? "Superávit: " : "Faltam: ") + fmtCompactBRL(Math.abs(gapMeta));
+
+      document.getElementById("kpiPedidos").textContent = fmtInt(currM.totalPedidos);
+      document.getElementById("momPedidos").innerHTML = prevM ? renderMoMBadge(currM.totalPedidos, prevM.totalPedidos, false, false, compSuffix) : fallbackBadge;
+      document.getElementById("prevPedidos").textContent = prevM ? prevLabelShort + ": " + fmtInt(prevM.totalPedidos) + " ped." : "";
+
+      document.getElementById("kpiTicketMedio").textContent = fmtBRL(currM.ticketMedio);
+      document.getElementById("momTicketMedio").innerHTML = prevM ? renderMoMBadge(currM.ticketMedio, prevM.ticketMedio, false, false, compSuffix) : fallbackBadge;
+      document.getElementById("prevTicketMedio").textContent = prevM ? prevLabelShort + ": " + fmtCompactBRL(prevM.ticketMedio) : "";
+
+      document.getElementById("kpiPecas").textContent = fmtInt(currM.totalPecas) + " pçs";
+      document.getElementById("momPecas").innerHTML = prevM ? renderMoMBadge(currM.totalPecas, prevM.totalPecas, false, false, compSuffix) : fallbackBadge;
+      document.getElementById("subPecasPorPedido").textContent = fmtInt(currM.pecasPorPedido) + " pçs/ped";
+
+      document.getElementById("kpiClientesAtendidos").textContent = fmtInt(currM.clientesAtendidos);
+      document.getElementById("momClientesAtendidos").innerHTML = prevM ? renderMoMBadge(currM.clientesAtendidos, prevM.clientesAtendidos, false, false, compSuffix) : fallbackBadge;
+      document.getElementById("subCarteiraTotal").textContent = "Base: " + (starData.dClientes || []).length + " clientes";
+
+      document.getElementById("kpiClientesNovos").textContent = fmtInt(currM.clientesNovos);
+      document.getElementById("momClientesNovos").innerHTML = prevM ? renderMoMBadge(currM.clientesNovos, prevM.clientesNovos, false, false, compSuffix) : fallbackBadge;
+      const shareNovos = currM.clientesAtendidos > 0 ? (currM.clientesNovos / currM.clientesAtendidos) * 100 : 0;
+      document.getElementById("subShareNovos").textContent = fmtPct(shareNovos, 0) + " dos atend.";
+
+      document.getElementById("kpiCidades").textContent = fmtInt(currM.qtdCidades) + " Cid.";
+      document.getElementById("kpiUFs").textContent = fmtInt(currM.qtdUFs) + " UFs";
+      document.getElementById("momCidades").innerHTML = prevM ? renderMoMBadge(currM.qtdCidades, prevM.qtdCidades, false, false, compSuffix) : fallbackBadge;
+      document.getElementById("prevCidadesUFs").textContent = prevM ? prevLabelShort + ": " + prevM.qtdCidades + " cid / " + prevM.qtdUFs + " UF" : "";
+
+      document.getElementById("kpiDescontoPct").textContent = fmtPct(currM.descontoMedioPct, 2);
+      document.getElementById("momDesconto").innerHTML = prevM ? renderMoMBadge(currM.descontoMedioPct, prevM.descontoMedioPct, true, true, compSuffix) : '<span class="mom-neutral">Ponderado</span>';
+      document.getElementById("subDescontoValor").textContent = fmtCompactBRL(currM.totalDesconto) + " desc.";
+
+      // Evolução Mensal e Matriz MoM / YoY
+      const monthlyStats = allMonths.map((ym) => {
+        const rows = baseFiltered.filter(r => r.Ano_Mes === ym);
+        const m = computeMetrics(rows, [ym], selRep);
+        const gIdx = globalMonths.indexOf(ym);
+        const prevYm = gIdx > 0 ? globalMonths[gIdx - 1] : null;
+        const pRows = prevYm ? dimFiltered.filter(r => r.Ano_Mes === prevYm) : [];
+        const pm = prevYm ? computeMetrics(pRows, [prevYm], selRep) : null;
+        const momGrowth = pm && pm.fatLiquido > 0 ? ((m.fatLiquido - pm.fatLiquido) / pm.fatLiquido) * 100 : 0;
+        return { ym, label: formatMonthLabel(ym), ...m, momGrowth };
+      });
+
+      // Dados YoY para a Matriz quando houver múltiplos anos
+      let yoyComparison = null;
+      const refYear = selAno !== "ALL" ? selAno : (globalYears.length > 0 ? globalYears[globalYears.length - 1] : null);
+      const refYearIdx = refYear ? globalYears.indexOf(refYear) : -1;
+      if (refYearIdx > 0) {
+        const py = globalYears[refYearIdx - 1];
+        const cyMonths = globalMonths.filter(ym => ym.startsWith(refYear));
+        const pyMonths = globalMonths.filter(ym => ym.startsWith(py));
+        const cyMetrics = computeMetrics(dimFiltered.filter(r => r.Ano === refYear), cyMonths, selRep);
+        const pyMetrics = computeMetrics(dimFiltered.filter(r => r.Ano === py), pyMonths, selRep);
+        yoyComparison = { currYear: refYear, prevYear: py, curr: cyMetrics, prev: pyMetrics };
+      }
+
+      drawNativeMoMChart(monthlyStats);
+      renderMoMMatrix(monthlyStats, yoyComparison, isYoYMode);
+      renderRepRanking(currentRows, prevRows, currentMonthsList, hasPrevBase, compSuffix);
+      renderCurvaABC(currentRows);
+      renderGeoSection(currentRows);
+    }
+
+    function renderMoMMatrix(monthlyStats, yoyComparison, isYoYMode) {
+      const thead = document.getElementById("theadMoMMatrix");
+      const tbody = document.getElementById("tbodyMoMMatrix");
+
+      let headHtml = '<tr><th class="sticky-col">Indicador (KPI)</th>';
+      monthlyStats.forEach(s => { headHtml += '<th class="text-right">' + s.label + '</th>'; });
+      headHtml += '<th class="text-center">Último MoM</th>';
+      if (yoyComparison) {
+        headHtml += '<th class="text-right" style="background:#334155">Ano ' + yoyComparison.prevYear + '</th>';
+        headHtml += '<th class="text-right" style="background:#4c0519">Ano ' + yoyComparison.currYear + '</th>';
+        headHtml += '<th class="text-center" style="background:#881337">Var. YoY</th>';
+      }
+      headHtml += '</tr>';
+      thead.innerHTML = headHtml;
+
+      const specs = [
+        { name: "Faturamento Bruto", key: "fatBruto", fmt: fmtBRL },
+        { name: "Faturamento Líquido", key: "fatLiquido", fmt: fmtBRL, bold: true },
+        { name: "Meta Comercial", key: "metaValor", fmt: fmtBRL },
+        { name: "Atingimento Meta (%)", key: "atingimentoMetaPct", fmt: v => fmtPct(v, 1), isPP: true },
+        { name: "Total de Pedidos", key: "totalPedidos", fmt: fmtInt },
+        { name: "Ticket Médio", key: "ticketMedio", fmt: fmtBRL },
+        { name: "Peças Vendidas", key: "totalPecas", fmt: fmtInt },
+        { name: "Clientes Atendidos", key: "clientesAtendidos", fmt: fmtInt },
+        { name: "Clientes Novos", key: "clientesNovos", fmt: fmtInt },
+        { name: "Cidades Atendidas", key: "qtdCidades", fmt: fmtInt },
+        { name: "UFs Atendidas", key: "qtdUFs", fmt: fmtInt },
+        { name: "Desconto Médio (%)", key: "descontoMedioPct", fmt: v => fmtPct(v, 2), isPP: true, invert: true }
+      ];
+
+      tbody.innerHTML = specs.map(spec => {
+        const last = monthlyStats[monthlyStats.length - 1];
+        const penult = monthlyStats.length >= 2 ? monthlyStats[monthlyStats.length - 2] : null;
+        const momHtml = (last && penult) ? renderMoMBadge(last[spec.key], penult[spec.key], spec.isPP, spec.invert, "MoM") : "--";
+        const cells = monthlyStats.map(s =>
+          '<td class="text-right ' + (spec.bold ? "font-bold" : "") + '">' + spec.fmt(s[spec.key]) + '</td>'
+        ).join("");
+
+        let yoyCells = "";
+        if (yoyComparison) {
+          const vPrev = yoyComparison.prev[spec.key];
+          const vCurr = yoyComparison.curr[spec.key];
+          const yoyBadge = renderMoMBadge(vCurr, vPrev, spec.isPP, spec.invert, "YoY");
+          yoyCells =
+            '<td class="text-right" style="background:#f8fafc">' + spec.fmt(vPrev) + '</td>' +
+            '<td class="text-right font-bold" style="background:#fff1f2">' + spec.fmt(vCurr) + '</td>' +
+            '<td class="text-center" style="background:#fff1f2">' + yoyBadge + '</td>';
+        }
+
+        return '<tr><td class="sticky-col font-bold">' + spec.name + '</td>' + cells + '<td class="text-center">' + momHtml + '</td>' + yoyCells + '</tr>';
+      }).join("");
+    }
+
+    function renderRepRanking(currentRows, prevRows, currentMonthsList, hasPrevBase, compSuffix) {
+      const container = document.getElementById("repListContainer");
+      const reps = starData.dRepresentantes || [];
+
+      const repStats = reps.map(r => {
+        const name = r.Nome_Representante;
+        const rRows = currentRows.filter(x => x.Nome_Representante === name);
+        const pRows = prevRows.filter(x => x.Nome_Representante === name);
+        const fatLiq = rRows.reduce((a, x) => a + x.Valor_Liquido, 0);
+        const prevLiq = pRows.reduce((a, x) => a + x.Valor_Liquido, 0);
+        const pecas = rRows.reduce((a, x) => a + x.Qtd_Pecas, 0);
+        const pedidos = new Set(rRows.map(x => x.ID_Pedido)).size;
+        const meta = getTargetForSelection(currentMonthsList, name);
+        const pctMeta = meta > 0 ? (fatLiq / meta) * 100 : 0;
+        return { name, regiao: r.Regiao_Atuacao, fatLiq, prevLiq, pecas, pedidos, meta, pctMeta };
+      }).filter(r => r.fatLiq > 0 || r.meta > 0).sort((a, b) => b.fatLiq - a.fatLiq);
+
+      container.innerHTML = repStats.map((r, i) => {
+        const pctBar = Math.min(100, Math.round(r.pctMeta));
+        const barColor = r.pctMeta >= 100 ? "#059669" : r.pctMeta >= 85 ? "#d97706" : "#be123c";
+        const momBadge = hasPrevBase ? renderMoMBadge(r.fatLiq, r.prevLiq, false, false, compSuffix) : "";
+        return `
+          <div class="rep-item">
+            <div class="rep-item-top">
+              <div>
+                <span class="rep-name">#${i + 1} ${r.name}</span>
+                <div class="rep-meta-sub">${r.regiao} • ${r.pedidos} ped • ${fmtInt(r.pecas)} pçs</div>
+              </div>
+              <div style="text-align:right">
+                <div class="rep-name">${fmtBRL(r.fatLiq)}</div>
+                <div>${momBadge}</div>
+              </div>
+            </div>
+            <div style="display:flex; justify-content:space-between; font-size:10.5px; color:#475569; margin-top:6px;">
+              <span>Meta: ${fmtBRL(r.meta)}</span>
+              <strong>${fmtPct(r.pctMeta, 1)} atingido</strong>
+            </div>
+            <div class="progress-track" style="margin:4px 0 0 0;">
+              <div class="progress-fill" style="width:${pctBar}%; background:${barColor};"></div>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function renderCurvaABC(currentRows) {
+      const grouped = {};
+      let totalLiq = 0;
+      currentRows.forEach(r => {
+        let key = "", label = "";
+        if (currentAbcMode === "PRODUTO") {
+          key = r.Cod_Referencia || r.SKU_Produto;
+          label = key + " - " + r.Nome_Produto.replace(/\s*\([^)]*\)\s*$/, "");
+        } else if (currentAbcMode === "COR") {
+          key = r.Cor || "Padrão";
+          label = "Cor: " + key;
+        } else if (currentAbcMode === "TAMANHO") {
+          key = r.Tamanho || "Único";
+          label = "Tamanho " + key;
+        } else if (currentAbcMode === "CLIENTE") {
+          key = r.Nome_Cliente;
+          label = r.Nome_Cliente + " (" + r.Cidade + "/" + r.UF + ")";
+        } else {
+          key = r.Categoria;
+          label = r.Categoria;
+        }
+        if (!grouped[key]) grouped[key] = { key, label, pecas: 0, fatLiquido: 0 };
+        grouped[key].pecas += r.Qtd_Pecas;
+        grouped[key].fatLiquido += r.Valor_Liquido;
+        totalLiq += r.Valor_Liquido;
+      });
+
+      const items = Object.values(grouped).sort((a, b) => b.fatLiquido - a.fatLiquido);
+      let acumPct = 0;
+      const summary = { A: { val: 0, count: 0 }, B: { val: 0, count: 0 }, C: { val: 0, count: 0 } };
+
+      items.forEach((it, idx) => {
+        const prevAcum = acumPct;
+        const share = totalLiq > 0 ? (it.fatLiquido / totalLiq) * 100 : 0;
+        acumPct += share;
+        it.share = share;
+        it.acumPct = acumPct;
+        let classe = "C";
+        if (prevAcum < 80 || idx === 0) classe = "A";
+        else if (prevAcum < 95) classe = "B";
+        it.classe = classe;
+        summary[classe].val += it.fatLiquido;
+        summary[classe].count += 1;
+      });
+
+      const totalCount = items.length || 1;
+      document.getElementById("abcSummaryAVal").textContent = fmtBRL(summary.A.val);
+      document.getElementById("abcSummaryACount").textContent = summary.A.count + " de " + items.length + " (" + fmtPct((summary.A.count / totalCount) * 100, 0) + " do mix)";
+      document.getElementById("abcSummaryAShare").textContent = fmtPct(totalLiq > 0 ? (summary.A.val / totalLiq) * 100 : 0, 0);
+
+      document.getElementById("abcSummaryBVal").textContent = fmtBRL(summary.B.val);
+      document.getElementById("abcSummaryBCount").textContent = summary.B.count + " de " + items.length + " (" + fmtPct((summary.B.count / totalCount) * 100, 0) + " do mix)";
+      document.getElementById("abcSummaryBShare").textContent = fmtPct(totalLiq > 0 ? (summary.B.val / totalLiq) * 100 : 0, 0);
+
+      document.getElementById("abcSummaryCVal").textContent = fmtBRL(summary.C.val);
+      document.getElementById("abcSummaryCCount").textContent = summary.C.count + " de " + items.length + " (" + fmtPct((summary.C.count / totalCount) * 100, 0) + " do mix)";
+      document.getElementById("abcSummaryCShare").textContent = fmtPct(totalLiq > 0 ? (summary.C.val / totalLiq) * 100 : 0, 0);
+
+      document.getElementById("thAbcTitle").textContent =
+        currentAbcMode === "PRODUTO" ? "SKU / Referência" :
+        currentAbcMode === "COR" ? "Cor da Peça" :
+        currentAbcMode === "TAMANHO" ? "Tamanho (Grade)" :
+        currentAbcMode === "CLIENTE" ? "Cliente (Cidade/UF)" : "Categoria";
+
+      document.getElementById("tbodyABC").innerHTML = items.map((it, idx) => {
+        const tagCls = it.classe === "A" ? "a" : it.classe === "B" ? "b" : "c";
+        return `
+          <tr>
+            <td>${idx + 1}</td>
+            <td class="font-bold">${it.label}</td>
+            <td class="text-right">${fmtInt(it.pecas)}</td>
+            <td class="text-right font-bold">${fmtBRL(it.fatLiquido)}</td>
+            <td class="text-right">${fmtPct(it.share, 1)}</td>
+            <td class="text-right font-bold">${fmtPct(it.acumPct, 1)}</td>
+            <td class="text-center"><span class="abc-tag ${tagCls}">${it.classe}</span></td>
+          </tr>
+        `;
+      }).join("");
+
+      drawNativeABCChart(items);
+    }
+
+    function renderGeoSection(currentRows) {
+      const ufMap = {};
+      const cityMap = {};
+      currentRows.forEach(r => {
+        const uf = r.UF || "SP";
+        ufMap[uf] = (ufMap[uf] || 0) + r.Valor_Liquido;
+        const cKey = r.Cidade + " / " + uf;
+        if (!cityMap[cKey]) cityMap[cKey] = { label: cKey, clientes: new Set(), pedidos: new Set(), fatLiq: 0 };
+        cityMap[cKey].clientes.add(r.Nome_Cliente);
+        cityMap[cKey].pedidos.add(r.ID_Pedido);
+        cityMap[cKey].fatLiq += r.Valor_Liquido;
+      });
+
+      const ufEntries = Object.entries(ufMap).sort((a, b) => b[1] - a[1]);
+      drawNativeUFChart(ufEntries);
+
+      const citiesList = Object.values(cityMap).sort((a, b) => b.fatLiq - a.fatLiq);
+      document.getElementById("tbodyCidades").innerHTML = citiesList.map(c => `
+        <tr>
+          <td class="font-bold">${c.label}</td>
+          <td class="text-center">${c.clientes.size}</td>
+          <td class="text-center">${c.pedidos.size}</td>
+          <td class="text-right font-bold">${fmtBRL(c.fatLiq)}</td>
+        </tr>
+      `).join("");
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      populateFilters();
+      updateDashboard();
+
+      const btnToggle = document.getElementById("btnToggleMobileFilters");
+      const drawer = document.getElementById("mobileFilterDrawer");
+      if (btnToggle && drawer) {
+        btnToggle.addEventListener("click", () => {
+          drawer.classList.toggle("open");
+        });
+      }
+
+      document.getElementById("filterAno").addEventListener("change", () => {
+        updateMesOptions(getEnrichedFacts(), false);
+        updateDashboard();
+      });
+
+      document.getElementById("filterRegiao").addEventListener("change", () => {
+        updateUFOptions(getEnrichedFacts(), false);
+        updateDashboard();
+      });
+
+      ["filterMes", "filterRep", "filterUF", "filterCat", "filterCor", "filterTam"].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener("change", updateDashboard);
+      });
+
+      document.getElementById("btnResetFilters").addEventListener("click", () => {
+        const enriched = getEnrichedFacts();
+        const selAno = document.getElementById("filterAno");
+        selAno.selectedIndex = selAno.options.length - 1;
+        document.getElementById("filterRegiao").value = "ALL";
+        updateMesOptions(enriched, false);
+        updateUFOptions(enriched, false);
+        document.getElementById("filterRep").value = "ALL";
+        document.getElementById("filterUF").value = "ALL";
+        document.getElementById("filterCat").value = "ALL";
+        if (document.getElementById("filterCor")) document.getElementById("filterCor").value = "ALL";
+        if (document.getElementById("filterTam")) document.getElementById("filterTam").value = "ALL";
+        updateDashboard();
+      });
+
+      const setAbcActive = (activeId) => {
+        ["btnAbcProdutos", "btnAbcCores", "btnAbcTamanhos", "btnAbcClientes", "btnAbcCategorias"].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.className = (id === activeId) ? "abc-tab-btn active" : "abc-tab-btn";
+        });
+      };
+
+      document.getElementById("btnAbcProdutos").addEventListener("click", () => {
+        currentAbcMode = "PRODUTO";
+        setAbcActive("btnAbcProdutos");
+        updateDashboard();
+      });
+      const btnAbcCores = document.getElementById("btnAbcCores");
+      if (btnAbcCores) {
+        btnAbcCores.addEventListener("click", () => {
+          currentAbcMode = "COR";
+          setAbcActive("btnAbcCores");
+          updateDashboard();
+        });
+      }
+      const btnAbcTamanhos = document.getElementById("btnAbcTamanhos");
+      if (btnAbcTamanhos) {
+        btnAbcTamanhos.addEventListener("click", () => {
+          currentAbcMode = "TAMANHO";
+          setAbcActive("btnAbcTamanhos");
+          updateDashboard();
+        });
+      }
+      document.getElementById("btnAbcClientes").addEventListener("click", () => {
+        currentAbcMode = "CLIENTE";
+        setAbcActive("btnAbcClientes");
+        updateDashboard();
+      });
+      document.getElementById("btnAbcCategorias").addEventListener("click", () => {
+        currentAbcMode = "CATEGORIA";
+        setAbcActive("btnAbcCategorias");
+        updateDashboard();
+      });
+    });
+  </script>
+</body>
+</html>
