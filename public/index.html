@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="h-full bg-slate-50 text-slate-900">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MenuPilot AI — Copiloto de Engenharia de Cardápio & Vendas para Delivery</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  
+  <!-- Fontes Google: Plus Jakarta Sans & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif'],
+            mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace']
+          },
+          colors: {
+            brand: {
+              50: '#fff1f2',
+              100: '#ffe4e6',
+              200: '#fecdd3',
+              500: '#f43f5e',
+              600: '#e11d48',
+              700: '#be123c',
+              800: '#9f1239',
+              900: '#881337',
+            },
+            coral: {
+              500: '#ff5a36',
+              600: '#ea4520',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+
+  <style>
+    /* Estilos customizados complementares */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #f1f5f9;
+      border-radius: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+    @keyframes pulse-subtle {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.95; transform: scale(1.02); }
+    }
+    .animate-pulse-subtle {
+      animation: pulse-subtle 3s infinite ease-in-out;
+    }
+  </style>
+</head>
+<body class="min-h-full flex flex-col font-sans antialiased bg-slate-50 text-slate-800">
+
+  <!-- =========================================================================
+       TOAST CONTAINER
+       ========================================================================= -->
+  <div id="toastContainer" class="fixed top-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- =========================================================================
+       HEADER / NAVBAR
+       ========================================================================= -->
+  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm transition-all">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        
+        <!-- Logotipo e Identidade -->
+        <div class="flex items-center gap-3">
+          <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-brand-700 via-brand-600 to-coral-500 flex items-center justify-center text-white shadow-md shadow-brand-500/20">
+            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-2xl font-extrabold tracking-tight text-slate-900">MenuPilot<span class="text-brand-600"> AI</span></span>
+              <span class="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-brand-50 text-brand-700 border border-brand-200">
+                v1.0 • Gemini 2.5 Flash
+              </span>
+            </div>
+            <p class="text-xs text-slate-500 hidden md:block">Engenharia de Cardápio Determinística & Neuromarketing para Delivery (iFood)</p>
+          </div>
+        </div>
+
+        <!-- Ações do Cabeçalho -->
+        <div class="flex items-center gap-2 sm:gap-3">
+          <!-- Botão Carregar Exemplo (1-clique zero atrito) -->
+          <button id="btnLoadSample" type="button" class="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs sm:text-sm font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-lg border border-slate-300 transition shadow-sm hover:text-slate-900">
+            <svg class="w-4 h-4 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
+            <span class="hidden lg:inline">Carregar</span> Exemplo (Hamburgueria)
+          </button>
+
+          <!-- Input de Upload CSV Customizado -->
+          <label class="cursor-pointer inline-flex items-center gap-1.5 px-3.5 py-2 text-xs sm:text-sm font-semibold text-slate-700 bg-white hover:bg-slate-50 rounded-lg border border-slate-300 transition shadow-sm">
+            <svg class="w-4 h-4 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+            </svg>
+            <span class="hidden sm:inline">Subir</span> CSV
+            <input type="file" id="csvFileInput" accept=".csv" class="hidden" />
+          </label>
+
+          <!-- Botão Configurar API Key -->
+          <button id="btnOpenApiKeyModal" type="button" class="relative inline-flex items-center gap-1.5 px-3 py-2 text-xs sm:text-sm font-semibold text-slate-700 bg-white hover:bg-slate-50 rounded-lg border border-slate-300 transition shadow-sm">
+            <svg class="w-4 h-4 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+            </svg>
+            <span class="hidden md:inline">Chave</span> Gemini
+            <span id="apiKeyStatusDot" class="w-2 h-2 rounded-full bg-slate-400"></span>
+          </button>
+
+          <!-- Botão Principal: Otimizar com IA -->
+          <button id="btnRunOptimization" type="button" class="inline-flex items-center gap-2 px-4 py-2 text-xs sm:text-sm font-bold text-white bg-gradient-to-r from-brand-600 via-brand-700 to-coral-600 hover:from-brand-700 hover:to-coral-700 rounded-lg shadow-md shadow-brand-500/25 transition active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed">
+            <svg id="aiIcon" class="w-4 h-4 animate-spin hidden" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+            </svg>
+            <svg id="sparkleIcon" class="w-4 h-4 text-amber-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+            </svg>
+            <span id="btnAiText">Otimizar com IA</span>
+          </button>
+
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       CONTEÚDO PRINCIPAL
+       ========================================================================= -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+    
+    <!-- BANNER DE BOAS-VINDAS / CONTEXTO ESTRATÉGICO -->
+    <section class="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white rounded-2xl p-6 sm:p-8 shadow-xl relative overflow-hidden">
+      <!-- Decorações de fundo -->
+      <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-brand-600/20 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute right-40 top-0 w-48 h-48 bg-coral-500/20 rounded-full blur-2xl pointer-events-none"></div>
+
+      <div class="relative z-10 max-w-3xl space-y-3">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-white/10 text-brand-200 border border-white/10 backdrop-blur-sm">
+          <span>🎯 Engenharia de Cardápio para Restaurantes Parceiros iFood & Delivery</span>
+        </div>
+        <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight">
+          Transforme dados brutos de vendas em <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-coral-400 to-amber-300">lucro real e descrições irresistíveis</span>.
+        </h1>
+        <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+          O <strong>MenuPilot AI</strong> combina a precisão matemática da <em>Matriz Kasavana & Smith (BCG de Restaurante)</em> com a criatividade de conversão do <strong>Google Gemini 2.5 Flash</strong>. Identifique pratos de alta margem esquecidos e crie combos magnéticos sem alucinações de preços.
+        </p>
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         CARDS DE KPIS EXECUTIVOS
+         ======================================================================= -->
+    <section>
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+          <span>📊</span> Indicadores Financeiros do Cardápio
+        </h2>
+        <span id="dataStatusBadge" class="text-xs font-medium text-slate-500 bg-slate-100 px-2.5 py-1 rounded-md border border-slate-200">
+          Carregando dados...
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <!-- KPI 1: Faturamento Mensal -->
+        <div class="bg-white rounded-xl p-5 border border-slate-200/80 shadow-sm hover:shadow-md transition">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Faturamento Mensal</span>
+            <div class="w-9 h-9 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-sm">
+              R$
+            </div>
+          </div>
+          <div id="kpiRevenue" class="text-2xl font-black text-slate-900">R$ 0,00</div>
+          <p class="text-xs text-slate-500 mt-1 flex items-center gap-1">
+            <span class="text-emerald-600 font-semibold" id="kpiRevenueOrders">0 pedidos</span> no período
+          </p>
+        </div>
+
+        <!-- KPI 2: Lucro Bruto Estimado -->
+        <div class="bg-white rounded-xl p-5 border border-slate-200/80 shadow-sm hover:shadow-md transition">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Lucro Bruto Estimado</span>
+            <div class="w-9 h-9 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-sm">
+              📈
+            </div>
+          </div>
+          <div id="kpiProfit" class="text-2xl font-black text-slate-900">R$ 0,00</div>
+          <p class="text-xs text-slate-500 mt-1">Margem bruta antes de custos fixos</p>
+        </div>
+
+        <!-- KPI 3: Ticket Médio -->
+        <div class="bg-white rounded-xl p-5 border border-slate-200/80 shadow-sm hover:shadow-md transition">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Ticket Médio por Prato</span>
+            <div class="w-9 h-9 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center font-bold text-sm">
+              🏷️
+            </div>
+          </div>
+          <div id="kpiTicket" class="text-2xl font-black text-slate-900">R$ 0,00</div>
+          <p class="text-xs text-slate-500 mt-1">Valor médio por item vendido</p>
+        </div>
+
+        <!-- KPI 4: Margem Média -->
+        <div class="bg-white rounded-xl p-5 border border-slate-200/80 shadow-sm hover:shadow-md transition">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Margem Média (%)</span>
+            <div class="w-9 h-9 rounded-lg bg-rose-50 text-brand-600 flex items-center justify-center font-bold text-sm">
+              %
+            </div>
+          </div>
+          <div id="kpiMarginPct" class="text-2xl font-black text-slate-900">0,0%</div>
+          <p class="text-xs text-slate-500 mt-1">Rentabilidade ponderada das vendas</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         MATRIZ DE ENGENHARIA DE CARDÁPIO (SCATTER PLOT + 4 QUADRANTES)
+         ======================================================================= -->
+    <section class="space-y-4">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+        <div>
+          <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+            <span>🎯</span> Matriz de Engenharia de Cardápio (Kasavana & Smith)
+          </h2>
+          <p class="text-xs text-slate-500">
+            Dispersão de <strong>Popularidade (Volume de Vendas)</strong> vs. <strong>Rentabilidade (Margem de Contribuição R$)</strong> com corte na mediana de pedidos e média de margem.
+          </p>
+        </div>
+
+        <!-- Badges de Linhas de Corte -->
+        <div class="flex items-center gap-2 text-xs">
+          <span class="px-2.5 py-1 bg-slate-100 text-slate-700 rounded-md border border-slate-200">
+            Corte Vendas: <strong id="lblThresholdOrders">0</strong> un/mês
+          </span>
+          <span class="px-2.5 py-1 bg-slate-100 text-slate-700 rounded-md border border-slate-200">
+            Corte Margem: <strong id="lblThresholdMargin">R$ 0,00</strong>
+          </span>
+        </div>
+      </div>
+
+      <!-- 4 Cards Resumo dos Quadrantes (com filtros de clique) -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <!-- Estrelas -->
+        <button type="button" data-filter="Estrela" class="quadrant-filter-card text-left p-3.5 rounded-xl border-2 border-emerald-200 bg-emerald-50/60 hover:bg-emerald-100/60 transition group">
+          <div class="flex items-center justify-between mb-1">
+            <span class="text-xs font-bold uppercase tracking-wider text-emerald-800 flex items-center gap-1">
+              <span>⭐</span> Estrelas (Stars)
+            </span>
+            <span id="countStars" class="px-2 py-0.5 rounded-full text-xs font-black bg-emerald-600 text-white">0</span>
+          </div>
+          <p class="text-[11px] text-emerald-700 leading-tight">Alta Venda + Alta Margem. Proteger preço e qualidade.</p>
+        </button>
+
+        <!-- Cavalos de Batalha -->
+        <button type="button" data-filter="Cavalo de Batalha" class="quadrant-filter-card text-left p-3.5 rounded-xl border-2 border-blue-200 bg-blue-50/60 hover:bg-blue-100/60 transition group">
+          <div class="flex items-center justify-between mb-1">
+            <span class="text-xs font-bold uppercase tracking-wider text-blue-800 flex items-center gap-1">
+              <span>🐎</span> Cavalos (Plowhorses)
+            </span>
+            <span id="countPlowhorses" class="px-2 py-0.5 rounded-full text-xs font-black bg-blue-600 text-white">0</span>
+          </div>
+          <p class="text-[11px] text-blue-700 leading-tight">Alta Venda + Baixa Margem. Iscas de tráfego; casar em combos.</p>
+        </button>
+
+        <!-- Quebra-cabeças -->
+        <button type="button" data-filter="Quebra-cabeça" class="quadrant-filter-card text-left p-3.5 rounded-xl border-2 border-amber-200 bg-amber-50/60 hover:bg-amber-100/60 transition group ring-2 ring-amber-400/40">
+          <div class="flex items-center justify-between mb-1">
+            <span class="text-xs font-bold uppercase tracking-wider text-amber-900 flex items-center gap-1">
+              <span>🧩</span> Quebra-cabeças (Puzzles)
+            </span>
+            <span id="countPuzzles" class="px-2 py-0.5 rounded-full text-xs font-black bg-amber-600 text-white">0</span>
+          </div>
+          <p class="text-[11px] text-amber-800 leading-tight font-medium">Baixa Venda + Alta Margem. Alvo principal de copywriting!</p>
+        </button>
+
+        <!-- Cães -->
+        <button type="button" data-filter="Cão" class="quadrant-filter-card text-left p-3.5 rounded-xl border-2 border-rose-200 bg-rose-50/60 hover:bg-rose-100/60 transition group">
+          <div class="flex items-center justify-between mb-1">
+            <span class="text-xs font-bold uppercase tracking-wider text-rose-900 flex items-center gap-1">
+              <span>🐕</span> Cães (Dogs)
+            </span>
+            <span id="countDogs" class="px-2 py-0.5 rounded-full text-xs font-black bg-rose-600 text-white">0</span>
+          </div>
+          <p class="text-[11px] text-rose-800 leading-tight">Baixa Venda + Baixa Margem. Reformular receita ou descontinuar.</p>
+        </button>
+      </div>
+
+      <!-- Container do Gráfico Scatter Chart.js -->
+      <div class="bg-white rounded-2xl p-4 sm:p-6 border border-slate-200/90 shadow-sm relative">
+        <div class="h-80 sm:h-96 w-full relative">
+          <canvas id="menuEngineeringChart"></canvas>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-500">
+          <div class="flex items-center gap-4">
+            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-emerald-500 inline-block"></span> Estrelas</span>
+            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-blue-500 inline-block"></span> Cavalos de Batalha</span>
+            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-amber-500 inline-block"></span> Quebra-cabeças</span>
+            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-rose-500 inline-block"></span> Cães</span>
+          </div>
+          <span class="italic">Dica: Passe o mouse sobre os pontos para ver detalhes completos de margem e faturamento.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         TABELA INTERATIVA DO CARDÁPIO
+         ======================================================================= -->
+    <section class="bg-white rounded-2xl border border-slate-200/90 shadow-sm overflow-hidden">
+      <!-- Barra Superior da Tabela: Filtros e Busca -->
+      <div class="p-4 sm:p-5 border-b border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+            <span>📋</span> Tabela de Pratos Classificados
+          </h3>
+          <p class="text-xs text-slate-500">Filtre por quadrante ou categoria para analisar cada item em detalhe.</p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2">
+          <!-- Filtro de Categoria -->
+          <select id="categorySelect" class="text-xs font-medium text-slate-700 bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 focus:ring-2 focus:ring-brand-500 outline-none">
+            <option value="ALL">Todas as Categorias</option>
+            <option value="Burgers">Burgers</option>
+            <option value="Acompanhamentos">Acompanhamentos</option>
+            <option value="Bebidas">Bebidas</option>
+            <option value="Sobremesas">Sobremesas</option>
+          </select>
+
+          <!-- Input de Busca -->
+          <div class="relative">
+            <input type="text" id="searchInput" placeholder="Buscar prato..." class="text-xs text-slate-800 placeholder-slate-400 bg-slate-50 border border-slate-300 rounded-lg pl-8 pr-3 py-1.5 focus:ring-2 focus:ring-brand-500 outline-none w-36 sm:w-48" />
+            <svg class="w-4 h-4 text-slate-400 absolute left-2.5 top-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </div>
+
+          <!-- Botão de Exportar CSV -->
+          <button id="btnExportCsv" type="button" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-lg border border-slate-300 transition">
+            <svg class="w-3.5 h-3.5 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            Exportar CSV
+          </button>
+        </div>
+      </div>
+
+      <!-- Filtros de Pílula (Tabs de Quadrante) -->
+      <div class="px-4 py-2.5 bg-slate-50/70 border-b border-slate-200 flex items-center gap-1.5 overflow-x-auto text-xs custom-scrollbar">
+        <button type="button" class="table-tab px-3 py-1 rounded-md font-semibold transition bg-brand-600 text-white shadow-sm" data-tab="ALL">
+          Todos (<span id="tabCountAll">16</span>)
+        </button>
+        <button type="button" class="table-tab px-3 py-1 rounded-md font-semibold transition text-slate-600 hover:bg-slate-200" data-tab="Estrela">
+          ⭐ Estrelas (<span id="tabCountStar">4</span>)
+        </button>
+        <button type="button" class="table-tab px-3 py-1 rounded-md font-semibold transition text-slate-600 hover:bg-slate-200" data-tab="Cavalo de Batalha">
+          🐎 Cavalos (<span id="tabCountPlow">4</span>)
+        </button>
+        <button type="button" class="table-tab px-3 py-1 rounded-md font-semibold transition text-slate-600 hover:bg-slate-200" data-tab="Quebra-cabeça">
+          🧩 Quebra-cabeças (<span id="tabCountPuzzle">4</span>)
+        </button>
+        <button type="button" class="table-tab px-3 py-1 rounded-md font-semibold transition text-slate-600 hover:bg-slate-200" data-tab="Cão">
+          🐕 Cães (<span id="tabCountDog">4</span>)
+        </button>
+      </div>
+
+      <!-- Tabela em si -->
+      <div class="overflow-x-auto custom-scrollbar">
+        <table class="w-full text-left text-xs whitespace-nowrap">
+          <thead class="bg-slate-100/80 text-slate-600 uppercase font-bold tracking-wider border-b border-slate-200">
+            <tr>
+              <th scope="col" class="py-3 px-4">Item / Prato</th>
+              <th scope="col" class="py-3 px-3">Categoria</th>
+              <th scope="col" class="py-3 px-3 text-right">Preço</th>
+              <th scope="col" class="py-3 px-3 text-right">Custo</th>
+              <th scope="col" class="py-3 px-3 text-right">Margem Unit.</th>
+              <th scope="col" class="py-3 px-3 text-right">Margem %</th>
+              <th scope="col" class="py-3 px-3 text-right">Vendas/Mês</th>
+              <th scope="col" class="py-3 px-3 text-right">Faturamento</th>
+              <th scope="col" class="py-3 px-3 text-right">Lucro Total</th>
+              <th scope="col" class="py-3 px-4 text-center">Classificação</th>
+            </tr>
+          </thead>
+          <tbody id="menuTableBody" class="divide-y divide-slate-100 font-medium">
+            <!-- Linhas geradas via JavaScript -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         PAINEL DE RECOMENDAÇÕES DA IA (GOOGLE GEMINI 2.5 FLASH)
+         ======================================================================= -->
+    <section id="aiSection" class="space-y-6 pt-4">
+      
+      <!-- Cabeçalho da Seção de IA -->
+      <div class="bg-gradient-to-r from-brand-900 via-slate-900 to-slate-900 text-white rounded-2xl p-6 shadow-lg border border-brand-800/40">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div class="space-y-1">
+            <div class="flex items-center gap-2">
+              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-400/20 text-amber-300 border border-amber-300/30">
+                ✨ Agente Consultor IA
+              </span>
+              <span id="aiModelBadge" class="text-xs font-mono text-slate-300">gemini-2.5-flash</span>
+            </div>
+            <h2 class="text-2xl font-extrabold tracking-tight">Relatório Executivo de Otimização</h2>
+            <p class="text-xs sm:text-sm text-slate-300">
+              Prescrições táticas de copywriting sensorial, engenharia de combos e remediação de itens de baixa rentabilidade.
+            </p>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <span id="aiTimestamp" class="text-xs text-slate-400"></span>
+            <button id="btnReOptimize" type="button" class="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-bold text-slate-900 bg-amber-400 hover:bg-amber-300 rounded-lg shadow transition active:scale-95">
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              </svg>
+              Reanalisar com IA
+            </button>
+          </div>
+        </div>
+
+        <!-- Banner de Status da IA (Alerta quando em modo simulado ou sucesso) -->
+        <div id="aiStatusNotice" class="mt-4 p-3 rounded-xl bg-white/10 border border-white/15 text-xs text-slate-200 flex items-start gap-2.5">
+          <span class="text-base">💡</span>
+          <span id="aiStatusNoticeText">Clique no botão "Otimizar com IA" para gerar a primeira análise inteligente.</span>
+        </div>
+      </div>
+
+      <!-- 1. Diagnóstico Executivo (3 Bullets) -->
+      <div class="bg-white rounded-2xl p-6 border border-slate-200/90 shadow-sm space-y-4">
+        <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+          <span>🩺</span> Diagnóstico Executivo da Saúde Financeira
+        </h3>
+        <div id="executiveBulletsContainer" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <!-- Gerado dinamicamente -->
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 animate-pulse h-24"></div>
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 animate-pulse h-24"></div>
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 animate-pulse h-24"></div>
+        </div>
+      </div>
+
+      <!-- 2. Otimização de Copywriting (Antes vs. Depois) -->
+      <div class="bg-white rounded-2xl p-6 border border-slate-200/90 shadow-sm space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div>
+            <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+              <span>✍️</span> Otimização de Copywriting Sensorial (Antes vs. Depois)
+            </h3>
+            <p class="text-xs text-slate-500">
+              Reescrita com gatilhos de apetite (appetite appeal), textura e valor percebido para itens <strong>Quebra-cabeça</strong> e <strong>Estrela</strong>.
+            </p>
+          </div>
+          <span class="text-xs font-semibold px-2.5 py-1 bg-amber-50 text-amber-800 rounded-lg border border-amber-200">
+            Foco em Conversão no iFood
+          </span>
+        </div>
+
+        <div id="copywritingCardsContainer" class="space-y-4">
+          <!-- Cards de copywriting gerados dinamicamente -->
+        </div>
+      </div>
+
+      <!-- 3. Sugestão de Combos Estratégicos -->
+      <div class="bg-white rounded-2xl p-6 border border-slate-200/90 shadow-sm space-y-4">
+        <div>
+          <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+            <span>🍔🍟</span> Engenharia de Combos de Alta Margem
+          </h3>
+          <p class="text-xs text-slate-500">
+            Combinações que usam itens de alto tráfego (Cavalo/Estrela) como âncoras para alavancar itens de alta rentabilidade (Quebra-cabeça).
+          </p>
+        </div>
+
+        <div id="combosCardsContainer" class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+          <!-- Combos gerados dinamicamente -->
+        </div>
+      </div>
+
+      <!-- 4. Plano de Ação para Itens "Cão" -->
+      <div class="bg-white rounded-2xl p-6 border border-slate-200/90 shadow-sm space-y-4">
+        <div>
+          <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+            <span>🐕</span> Plano de Ação para Itens de Baixa Performance (Cães)
+          </h3>
+          <p class="text-xs text-slate-500">
+            Medidas práticas para eliminar desperdício de insumos, reajustar preços ou substituir fornecedores.
+          </p>
+        </div>
+
+        <div id="dogActionPlanContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <!-- Itens do plano para cães gerados dinamicamente -->
+        </div>
+      </div>
+
+      <!-- Potencial Geral de Crescimento -->
+      <div id="growthPotentialBox" class="p-5 rounded-2xl bg-gradient-to-r from-emerald-900 to-slate-900 text-white flex items-start gap-4 shadow-md">
+        <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex-shrink-0 flex items-center justify-center text-xl font-bold">
+          🚀
+        </div>
+        <div class="space-y-1">
+          <h4 class="text-sm font-bold uppercase tracking-wider text-emerald-300">Potencial de Crescimento Projetado</h4>
+          <p id="growthPotentialText" class="text-xs sm:text-sm text-slate-200 leading-relaxed"></p>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- =========================================================================
+       MODAL DE CONFIGURAÇÃO DA CHAVE GEMINI
+       ========================================================================= -->
+  <div id="apiKeyModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm hidden">
+    <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 space-y-4 relative">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center font-bold">
+            🔑
+          </div>
+          <h3 class="text-base font-bold text-slate-900">Configurar Chave Gemini</h3>
+        </div>
+        <button id="btnCloseApiKeyModal" class="text-slate-400 hover:text-slate-600 p-1 rounded-md">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <p class="text-xs text-slate-600 leading-relaxed">
+        Você pode usar o aplicativo no <strong>Modo Demonstração Gratuito</strong> (com simulação realista embutida) ou inserir sua chave pessoal do Google Gemini para realizar chamadas ao vivo com o modelo <code class="bg-slate-100 px-1 py-0.5 rounded text-brand-700">gemini-2.5-flash</code>.
+      </p>
+
+      <div class="space-y-2">
+        <label for="apiKeyInput" class="block text-xs font-bold uppercase tracking-wider text-slate-700">
+          Chave de API (Google AI Studio)
+        </label>
+        <div class="relative">
+          <input type="password" id="apiKeyInput" placeholder="AIzaSy..." class="w-full text-xs font-mono text-slate-800 bg-slate-50 border border-slate-300 rounded-lg p-2.5 pr-10 focus:ring-2 focus:ring-brand-500 outline-none" />
+          <button type="button" id="toggleApiKeyVisibility" class="absolute right-2.5 top-2.5 text-slate-400 hover:text-slate-600">
+            👁️
+          </button>
+        </div>
+        <p class="text-[11px] text-slate-500">
+          Obtenha gratuitamente em <a href="https://aistudio.google.com/" target="_blank" rel="noopener noreferrer" class="text-brand-600 underline font-semibold">aistudio.google.com</a>. A chave fica salva apenas na sua sessão de navegador.
+        </p>
+      </div>
+
+      <div class="pt-2 flex items-center justify-end gap-2">
+        <button id="btnClearApiKey" type="button" class="px-3 py-1.5 text-xs font-semibold text-rose-600 hover:bg-rose-50 rounded-lg transition">
+          Remover Chave
+        </button>
+        <button id="btnSaveApiKey" type="button" class="px-4 py-2 text-xs font-bold text-white bg-slate-900 hover:bg-slate-800 rounded-lg shadow transition">
+          Salvar na Sessão
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       FOOTER
+       ========================================================================= -->
+  <footer class="mt-16 bg-white border-t border-slate-200 py-8 text-center text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <span class="font-extrabold text-slate-800">MenuPilot AI</span>
+        <span>•</span>
+        <span>Engenharia de Cardápio com Google Gemini 2.5 Flash</span>
+      </div>
+      <div>
+        <span>Desenvolvido para portfólio técnico & otimização comercial de delivery.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Script Principal da Aplicação -->
+  <script src="/app.js"></script>
+</body>
+</html>
+
