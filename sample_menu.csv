@@ -1,0 +1,18 @@
+id,item_name,category,current_description,price,cost,monthly_orders
+1,Bacon BBQ Supreme,Burgers,"Pão brioche tostado na manteiga, blend bovino 160g ao ponto, fatias crocantes de bacon artesanal defumado em macieira, queijo cheddar inglês derretido e molho barbecue rústico da casa.",42.00,14.50,420
+2,Smash Duplo Cheddar,Burgers,"Dois smash burgers de 90g com crostinha caramelizada, queijo cheddar cremoso duplo, cebola fininha chapeada e maionese secreta no pão brioche selado.",36.00,12.00,490
+3,Batata Rústica Alecrim & Páprica,Acompanhamentos,"Batatas cortadas à mão com casca, douradas e crocantes, temperadas com sal marinho, alecrim fresco da horta e páprica defumada. Acompanha maionese verde.",24.00,6.00,380
+4,Milkshake Ninho & Nutella 400ml,Sobremesas,"Sorvete artesanal batido com leite Ninho em pó de verdade, calda generosa de Nutella pura nas paredes do copo e chantilly fresco finalizado com cacau.",26.00,7.50,310
+5,Cheeseburger Tradicional,Burgers,"Pão brioche, hambúrguer 140g grelhado no fogo e queijo prato derretido.",25.00,14.00,550
+6,Batata Frita Palito Individual,Acompanhamentos,"Porção individual de batata frita palito tradicional sequinha e crocante.",15.00,7.50,510
+7,Refrigerante Coca-Cola Lata 350ml,Bebidas,"Lata 350ml gelada.",7.50,4.20,680
+8,Cerveja Heineken Long Neck 330ml,Bebidas,"Cerveja puro malte long neck 330ml bem gelada.",13.00,7.80,340
+9,Burger Gorgonzola e Geleia de Pimenta,Burgers,"Pão, hambúrguer de carne, queijo gorgonzola e geleia de pimenta.",46.00,15.00,95
+10,Truffle Brie Burger,Burgers,"Hambúrguer com queijo brie e azeite trufado no pão de brioche.",52.00,18.00,75
+11,Onion Rings Empanadas na Cerveja,Acompanhamentos,"Anéis de cebola empanados fritos. Acompanha molho da casa.",28.00,7.00,110
+12,Brownie Belga com Gelato de Baunilha,Sobremesas,"Fatia de brownie de chocolate com uma bola de sorvete de creme.",29.00,8.50,120
+13,Salada Caesar de Frango,Acompanhamentos,"Alface americana, tiras de frango grelhado, queijo ralado e croutons com molho caesar.",26.00,16.50,40
+14,Chá Gelado de Pêssego 500ml,Bebidas,"Chá gelado industrializado sabor pêssego garrafa 500ml.",9.00,5.50,50
+15,Mini Churros de Doce de Leite (4 un),Sobremesas,"4 unidades de mini churros fritos com recheio de doce de leite.",16.00,9.50,65
+16,Burger Vegetariano Grão-de-Bico,Burgers,"Hambúrguer vegetal de grão-de-bico com alface e tomate no pão integral.",29.00,18.00,45
+
