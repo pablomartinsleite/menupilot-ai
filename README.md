@@ -1,5 +1,7 @@
 # 🍔 MenuPilot AI — Copiloto de Engenharia de Cardápio & Vendas para Delivery
 
+https://menupilot-ai-chi.vercel.app/
+
 [![FastAPI](https://img.shields.io/badge/Backend-FastAPI-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
 [![Google Gemini 2.5 Flash](https://img.shields.io/badge/IA-Google%20Gemini%202.5%20Flash-4285F4?logo=google&logoColor=white)](https://ai.google.dev/)
 [![Chart.js](https://img.shields.io/badge/Frontend-TailwindCSS%20%7C%20Chart.js-FF6384?logo=chartdotjs&logoColor=white)](https://www.chartjs.org/)
